@@ -12,3 +12,11 @@
 hs_err_pid*
 /con4/nbproject/private/
 /software/con4/nbproject/private/
+
+# Temporary LaTeX files
+*.aux
+*.log
+*.out
+*.pdf
+*.toc
+
