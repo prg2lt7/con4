@@ -10,5 +10,13 @@ package logic;
  */
 public class Player
 {
+
+    public Player()
+    {
+    }
     
+    public int play(int[][] field)
+    {
+        return 4;
+    }
 }
