@@ -12,7 +12,7 @@ public class Field
 {
     private static final int DEFAULTWIDTH = 7;
     private static final int DEFAULTHEIGHT = 6;
-    int[][] field;
+    private int[][] field;
 
     public Field()
     {
@@ -28,11 +28,11 @@ public class Field
     
     public Field(int width, int height)
     {
-        if (width <= 0)
+        if (width <= 3)
         {
             width = DEFAULTWIDTH;
         }
-        if (height <= 0)
+        if (height <= 3)
         {
             height = DEFAULTHEIGHT;
         }
@@ -59,16 +59,6 @@ public class Field
             y++;
         }
         if (y < field[x].length)
-        {
-            field[x][y] = value;
-            return true;
-        }
-        return false;
-    }
-    
-    public boolean putStone(int x, int y, int value)
-    {
-        if (field[x][y] == 0)
         {
             field[x][y] = value;
             return true;
