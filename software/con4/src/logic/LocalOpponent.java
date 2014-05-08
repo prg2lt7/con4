@@ -20,7 +20,7 @@ public class LocalOpponent extends Opponent
     }
     
     @Override
-    public int move(int[][] field)
+    public int move(Field field)
     {
         int x;
         int y;
@@ -28,18 +28,17 @@ public class LocalOpponent extends Opponent
         Random randomGen = new Random();
         do
         {
-            x = randomGen.nextInt(field.length);
+            x = randomGen.nextInt(field.getField().length);
             y = 0;
-            while (y < field[x].length && field[x][y] != 0)
+            while (y < field.getField()[x].length && field.getField()[x][y] != 0)
             {    
                 y++;
             }
-            if (y < field[x].length)
+            if (y < field.getField()[x].length)
             {
-                //field[x][y] = value;
                 filled = true;
             }
-        } while (filled);
+        } while (!filled);
         return x;
     }
 }
