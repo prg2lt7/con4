@@ -1,5 +1,6 @@
 package network;
 
+import logic.Field;
 import logic.Opponent;
 
 
@@ -10,9 +11,8 @@ import logic.Opponent;
  */
 public class NetworkOpponent extends Opponent
 {
-
     @Override
-    public int move(int[][] field)
+    public int move(Field field)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
