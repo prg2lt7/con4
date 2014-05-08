@@ -1,10 +1,7 @@
-/*
- * Class Game contains all game parameters.
- */
 package logic;
 
 /**
- *
+ * Class Game contains all game parameters.
  * @author Fabian
  */
 public class Game
