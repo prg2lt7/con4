@@ -1,7 +1,12 @@
 package network;
 
-import java.net.DatagramSocket;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -20,15 +25,9 @@ public class Network extends Thread
     */
     //private static final int timeout = 4000;
     
-    
-    /*
-    * Socket References are beeing handled by the NetworkHandler and not the Server/Client Classes
-    */
-    //private DatagramSocket UdpHandler;
-    private Socket myTcpServer;
     private Socket myTcpClient;
     
-    private InetAddress otherAddress;
+    //private InetAddress otherAddress;
     
     
     /*
@@ -57,28 +56,85 @@ public class Network extends Thread
     /**
      *
      * @param ip String of the IP Address you want to connect (e.i. "192.168.4.12")
-     * @return The status of the connection (true = sccessful, false = connection failed)
+     * @return The status of the connection (true = sccessful, false = connection failed & aborted)
      */
     public boolean joinGame(String ip)
     {
-        boolean conStatus = false;
-        return conStatus;
+        System.out.println("The destination address is: " + ip);
+        try
+        {
+            myTcpClient = new Socket(ip,port);
+            System.out.println("Connected");
+            return true;
+        }
+        
+        catch (IOException ex)
+        {
+            System.err.println("Connection as Client failed");
+            return false;
+        }
     }
     
-    /*
-    * Creates a new TcpHost and waits for a client
-    */
-    public void createGame()
+
+    /**
+     *
+     * @return The status of the connection (true = sccessful, false = connection failed & aborted)
+     */
+    public boolean createGame()
     {
+        try
+        {
+            ServerSocket dummy = new ServerSocket(port);
+            myTcpClient = dummy.accept();
+            
+            System.out.println("Connected");
+            return true;
+        }
         
+        catch (IOException ex)
+        {
+            System.err.println("Connection as Client failed");
+            return true;
+        }
     }
+    
     
     /*
     * @return Returns the column of the new Disk
     */
     public int getMove()
     {
-        int column = 0;
+        int column = -1;
+        //Link Writer to the Socket
+        
+        try
+        {
+            PrintWriter outStream = new PrintWriter( 
+            myTcpClient.getOutputStream()); 
+         
+            //Link Writer to the Socket
+            BufferedReader inStream = new BufferedReader( 
+                new InputStreamReader(myTcpClient.getInputStream()));
+
+            //Send data
+            outStream.println("hslu.ch"); 
+            outStream.flush(); 
+            String line; 
+
+            //Data beeing read by Server
+            while ((line = inStream.readLine()) != null)
+            { 
+                System.out.println(line);
+            }
+            
+            //Only to test function
+            column = 2;
+        }
+        catch (IOException ex)
+        {
+            System.err.println("Error in Method setMove");
+            System.err.println(ex.getMessage());
+        }
         
         return column;
     }
@@ -88,11 +144,26 @@ public class Network extends Thread
     */
     public void setMove(int column)
     {
+        try
+        {
+            DataOutputStream dout =  
+               new DataOutputStream(myTcpClient.getOutputStream()); 
+            String data = (""+column);
+            dout.write(data.getBytes()); 
+            System.out.println(data);
+        }
+        
+        catch(IOException ex)
+        {
+            System.err.println("Error in Method setMove");
+            System.err.println("Error: " + ex.getMessage());
+        }
+        
         
     }
     
     /*
-    * Return the actual state of the Network
+    * Return the actual state of the Network connection
     */
     public int getStatus()
     {
