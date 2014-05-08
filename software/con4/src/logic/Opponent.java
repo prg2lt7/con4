@@ -8,15 +8,13 @@ package logic;
  *
  * @author daniw
  */
-public class Player
+public abstract class Opponent
 {
 
-    public Player()
+    public Opponent()
     {
     }
     
-    public int play(int[][] field)
-    {
-        return 4;
-    }
+    public abstract int move(int[][] field);
+    
 }

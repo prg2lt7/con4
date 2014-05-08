@@ -10,7 +10,7 @@ import java.util.Random;
  *
  * @author daniw
  */
-public class LocalOpponent extends Player
+public class LocalOpponent extends Opponent
 {
     private int value;
     
@@ -20,7 +20,7 @@ public class LocalOpponent extends Player
     }
     
     @Override
-    public int play(int[][] field)
+    public int move(int[][] field)
     {
         int x;
         int y;
