@@ -15,6 +15,6 @@ public abstract class Opponent
     {
     }
     
-    public abstract int move(int[][] field);
+    public abstract int move(Field field);
     
 }
