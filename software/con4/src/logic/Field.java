@@ -158,4 +158,15 @@ public class Field
         }
         return s;
     }
+    
+    /**
+     * Check if someone has won the game. 
+     * If no Player has won the Game, 0 is returned. 
+     * If a Player has won the Game, then the Players number is returned. 
+     * @return value representing winner of the game
+     */
+    public int isWinner()
+    {
+        return 0;
+    }
 }
