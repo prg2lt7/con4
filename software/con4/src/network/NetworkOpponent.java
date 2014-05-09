@@ -22,7 +22,7 @@ public class NetworkOpponent extends Opponent
     @Override
     public int move(Field field)
     {
-        return(network.getMove());
+        return(100);
     }
     
 }

@@ -5,8 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Pascal Häfliger <pascal.haefliger.01@stud.hslu.ch>
@@ -24,14 +22,23 @@ public class Network extends Thread
 
     // true:  Keep receiving packages
     // false: Stop receiving packages
+    private boolean listening;
+    
+    // true:  Keep this thread running
+    // false: Stop this read and thread dies      
     private boolean running;
-            
-    /***
-     * 
-     */       
+    
+    
+    // Für Thread
+    private int receivemessage = 99;
+    private int sendmessage = 99;
+    
+                  
     public Network()
     {
-        this.running = true;
+        super();
+        this.listening = true;
+        this.running = true;   
     }
     
     
@@ -87,54 +94,39 @@ public class Network extends Thread
             return false;
         }
     }
-    
-    
-    /**
-     * 
-     * @return Status of the closing procedure
-     *          true: connection successfully closed
-     *          flase: failed to close the connection correctly
-     */
-    public boolean close()
-    {
-        try
-        {
-            myTcpClient.close();
-            return true;
-        } 
-        
-        catch (IOException ex)
-        {
-            System.err.println("Exception while closing the connection: " + ex.getMessage());
-            return false;
-        }
-    }
-    
+   
     
     /**
      *
      * @return Returns the column of the new Disk:
-     *           125 Error
-     *           120 Loop stopped (running=false)
-     *           1,2,..,7 Legal move
+           125 Error
+           124 Initialize value
+           120 Loop stopped (listening=false)
+           100 none new Disk received
+           1,2,..,7 Legal move
      */  
-    public int getMove()
+    private synchronized void receiveDiskPos()
     {
-        while (running)
+        while (listening)
         {
             try
             {
-                return(instream.readByte());
+                //WARNING: The following IO-operation puts this Thread to the blocked life-cycle!
+                receivemessage = instream.readByte();
+                
+                //old function for none-threadning was:
+                //return(instream.readByte());
             }
             
             catch (IOException ex)
             {
                 System.err.println("Exception in Method getMove " + ex.getMessage());
-                return 125;
+                //return 125;
             }
+            
         }  
         //Loop stopped
-        return 120;
+        //return 120;
     }
    
     
@@ -142,13 +134,13 @@ public class Network extends Thread
      *
      * @param column The column the new Disk should be dropped
      */  
-    public void setMove(int column)
+    private synchronized void sendDiskPos()
     {
         try
         {            
-            int sendmessage = column;
             outstream.write(sendmessage);
             outstream.flush();
+            sendmessage = 100;
         }
         
         catch(IOException ex)
@@ -167,4 +159,77 @@ public class Network extends Thread
         instream = new DataInputStream(myTcpClient.getInputStream());
         outstream = new DataOutputStream(myTcpClient.getOutputStream());        
     }
+        
+    
+    /**
+     *
+     * @param listening State of the method "getMove"
+     *          true: Method is looping
+     *          false: Loop will stop
+     */
+    public void setListening(boolean listening)
+    {
+        this.listening = listening;
+    }
+      
+    
+    /**
+     *
+     * @param sendmessage the message as an integer you would like to send (e.x.: 1,2,..,7)
+     */
+    public void setMessage(int sendmessage)
+    {
+        this.sendmessage = sendmessage;
+    }
+    
+    
+    /**
+     *
+     * @return the value as an integer it received from the other side
+     */
+    public int receiveMessage()
+    {
+        return receivemessage;
+    }
+    
+    
+    @Override
+    public void run()
+    {
+        while(running)
+        {
+            receiveDiskPos();
+            sendDiskPos();
+        }
+        this.close();
+    }
+    
+     
+    /**
+     * 
+     * @return Status of the closing procedure
+     *          true: connection successfully closed
+     *          false: failed to close the connection correctly
+     */
+    private boolean close()
+    {
+        try
+        {
+            myTcpClient.close();
+            return true;
+        } 
+        
+        catch (IOException ex)
+        {
+            System.err.println("Exception while closing the connection: " + ex.getMessage());
+            return false;
+        }
+    }
+    
+    
+    public void stopThread()
+    {
+        this.running = false;
+    }
+    
 }

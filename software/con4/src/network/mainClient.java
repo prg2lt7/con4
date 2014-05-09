@@ -1,5 +1,8 @@
 package network;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Pascal Häfliger <pascal.haefliger.01@stud.hslu.ch>
@@ -14,23 +17,29 @@ public class mainClient
         System.out.println("Client: staus = " + clientstatus +"\n\n");
         
         //Ping-pong mit anderer Seite
+        
+        client.start();
+        
         for (int a=125 ; a >= 1 ; a--)
         {
+            System.out.println("Number received : " + client.receiveMessage());
+
+            System.out.println("Sending number :" + a);
+            client.setMessage(a);   
+            
+            
             try
             {
-                System.out.println("Number received : " + client.getMove());
-                
-                Thread.sleep(100);
-                
-                System.out.println("Sending number :" + a);
-                client.setMove(a);
+                client.sleep(5000);
+            } catch (InterruptedException ex)
+            {
+                Logger.getLogger(mainClient.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            catch (InterruptedException ex)
-            {
-                System.err.println(ex.getMessage());
-            }  
+            
         }
-        System.out.print("Connection closed successfully: " + client.close());
+        
+        client.stopThread();
+        System.out.print("Connection successfully closed");
     }
 }
