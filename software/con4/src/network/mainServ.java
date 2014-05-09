@@ -18,9 +18,12 @@ public class mainServ
         {
             try
             {
+                System.out.print("Sending number :" + a);
                 serv.setMove(a);
+                
                 Thread.sleep(1000);
-                System.out.println(serv.getMove());
+                
+                System.out.println("Received number: " + serv.getMove());
             }
             
             catch (InterruptedException ex)

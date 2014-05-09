@@ -18,8 +18,11 @@ public class mainClient
         {
             try
             {
-                System.out.println(client.getMove());
+                System.out.println("Number received : " + client.getMove());
+                
                 Thread.sleep(100);
+                
+                System.out.println("Sending number :" + a);
                 client.setMove(a);
             }
             
