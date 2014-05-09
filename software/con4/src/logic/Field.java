@@ -94,4 +94,68 @@ public class Field
         }
         return false;
     }
+
+    /**
+     * Override for the toString method.
+     * Returns the field in the format as follows: 
+     * +-+-+-+-+-+-+-+
+     * | | | | | | | |
+     * +-+-+-+-+-+-+-+
+     * | | | | | | | |
+     * +-+-+-+-+-+-+-+
+     * | | |X|O| | | |
+     * +-+-+-+-+-+-+-+
+     * | |X|O|X|X| | |
+     * +-+-+-+-+-+-+-+
+     * | |O|O|O|X| | |
+     * +-+-+-+-+-+-+-+
+     * | |O|X|X|O|X| |
+     * +-+-+-+-+-+-+-+
+     * @return String representation of the field
+     */
+    @Override
+    public String toString()
+    {
+        int x;
+        int y;
+        String s = "+";
+
+        for (x = 0; x < field.length; x++)
+        {
+            s += "-+";
+        }
+        s += "\n";
+
+        for (y = 0; y < field[0].length; y++)
+        {
+            s += "|";
+            for (x = 0; x < field.length; x++)
+            {
+                switch (field[x][y])
+                {
+                    case 0:
+                        s += " |";
+                        break;
+                    case 1:
+                        s += "X|";
+                        break;
+                    case 2:
+                        s += "O|";
+                        break;
+                    default:
+                        s += "#|";
+                        break;
+                }
+            }
+            s += "\n";
+
+            s += "+";
+            for (x = 0; x < field.length; x++)
+            {
+                s += "-+";
+            }
+            s += "\n";
+        }
+        return s;
+    }
 }
