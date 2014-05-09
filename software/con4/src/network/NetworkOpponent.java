@@ -11,11 +11,18 @@ import logic.Opponent;
  */
 public class NetworkOpponent extends Opponent
 {    
+    Network network;
+    
+    public NetworkOpponent(Network network)
+    {
+        this.network = network;
+        
+    }
+            
     @Override
     public int move(Field field)
-    {       
-        
-        return 255;
+    {
+        return(network.getMove());
     }
     
 }

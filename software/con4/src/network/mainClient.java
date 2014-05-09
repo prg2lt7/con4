@@ -31,6 +31,6 @@ public class mainClient
                 System.err.println(ex.getMessage());
             }  
         }
-        
+        System.out.print("Connection closed successfully: " + client.close());
     }
 }

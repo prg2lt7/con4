@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Pascal Häfliger <pascal.haefliger.01@stud.hslu.ch>
@@ -24,12 +26,14 @@ public class Network extends Thread
     // false: Stop receiving packages
     private boolean running;
             
-            
+    /***
+     * 
+     */       
     public Network()
     {
         this.running = true;
     }
-
+    
     
     /**
      *
@@ -57,7 +61,7 @@ public class Network extends Thread
         }
     }
     
-
+    
     /**
      *
      * @return The status of this TCP connection (true = successful, false = connection failed & aborted)
@@ -85,13 +89,35 @@ public class Network extends Thread
     }
     
     
-    /*
-    *
-    * @return Returns the column of the new Disk
-    *           125 Error
-    *           120 Loop stopped (running=false)
-    *           1,2,..,7 Legal move
-    */
+    /**
+     * 
+     * @return Status of the closing procedure
+     *          true: connection successfully closed
+     *          flase: failed to close the connection correctly
+     */
+    public boolean close()
+    {
+        try
+        {
+            myTcpClient.close();
+            return true;
+        } 
+        
+        catch (IOException ex)
+        {
+            System.err.println("Exception while closing the connection: " + ex.getMessage());
+            return false;
+        }
+    }
+    
+    
+    /**
+     *
+     * @return Returns the column of the new Disk:
+     *           125 Error
+     *           120 Loop stopped (running=false)
+     *           1,2,..,7 Legal move
+     */  
     public int getMove()
     {
         while (running)
@@ -110,11 +136,12 @@ public class Network extends Thread
         //Loop stopped
         return 120;
     }
+   
     
-    /*
-    *
-    * @column The column the new Disk should be dropped
-    */
+    /**
+     *
+     * @param column The column the new Disk should be dropped
+     */  
     public void setMove(int column)
     {
         try
@@ -128,8 +155,13 @@ public class Network extends Thread
         {
             System.err.println("Error in Method setMove: " + ex.getMessage());
         }            
-    }  
+    }
     
+    
+    /**
+     * 
+     * @throws IOException 
+     */
     private void initStream() throws IOException
     {
         instream = new DataInputStream(myTcpClient.getInputStream());
