@@ -11,8 +11,22 @@ public class mainClient
         Network client = new Network();
            
         boolean clientstatus = client.joinGame("localhost");
-        System.out.println("Client: staus = " + clientstatus +"/n/n");
+        System.out.println("Client: staus = " + clientstatus +"\n\n");
         
-        System.out.println("Client: Move received was " + client.getMove());
+        for (int a=125 ; a >= 1 ; a--)
+        {
+            try
+            {
+                System.out.println(client.getMove());
+                Thread.sleep(100);
+                client.setMove(a);
+            }
+            
+            catch (InterruptedException ex)
+            {
+                System.err.println(ex.getMessage());
+            }  
+        }
+        
     }
 }

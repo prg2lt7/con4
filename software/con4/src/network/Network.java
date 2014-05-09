@@ -1,10 +1,8 @@
 package network;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,7 +14,7 @@ public class Network extends Thread
     // Tcp Port
     private static final int port = 29000;
  
-    // Socket used as Client/Serve
+    // Socket used as Client/Server
     private Socket myTcpClient;
     
     private DataOutputStream outstream;
@@ -54,9 +52,7 @@ public class Network extends Thread
         
         catch (IOException ex)
         {
-            System.err.println("Client: Connection as Client failed");
-            System.err.println("Error: " +ex.getMessage());
-            
+            System.err.println("Client: Connection failed: " + ex.getMessage());            
             return false;
         }
     }
@@ -73,7 +69,6 @@ public class Network extends Thread
             System.out.println("Server: Waiting for accept();");
             ServerSocket dummy = new ServerSocket(port);
             myTcpClient = dummy.accept();
-            
             System.out.println("Server: Connected");
               
             initStream();
@@ -84,8 +79,7 @@ public class Network extends Thread
         
         catch (IOException ex)
         {
-            System.err.println("Server: Connection failed");
-            System.err.println("Error: " +ex.getMessage());
+            System.err.println("Server: Connection failed: " + ex.getMessage());
             return false;
         }
     }
@@ -94,17 +88,27 @@ public class Network extends Thread
     /*
     *
     * @return Returns the column of the new Disk
+    *           125 Error
+    *           120 Loop stopped (running=false)
+    *           1,2,..,7 Legal move
     */
     public int getMove()
     {
-        String receivemessage="255";
         while (running)
         {
-            System.out.println(receivemessage);
-            return (Integer.parseInt(receivemessage));
-        }
-        
-        return 255;
+            try
+            {
+                return(instream.readByte());
+            }
+            
+            catch (IOException ex)
+            {
+                System.err.println("Exception in Method getMove " + ex.getMessage());
+                return 125;
+            }
+        }  
+        //Loop stopped
+        return 120;
     }
     
     /*
@@ -118,13 +122,11 @@ public class Network extends Thread
             int sendmessage = column;
             outstream.write(sendmessage);
             outstream.flush();
-            System.out.println("Server sending: " + sendmessage);
         }
         
         catch(IOException ex)
         {
-            System.err.println("Server: Error in Method setMove");
-            System.err.println("Server: Error: " + ex.getMessage());
+            System.err.println("Error in Method setMove: " + ex.getMessage());
         }            
     }  
     
