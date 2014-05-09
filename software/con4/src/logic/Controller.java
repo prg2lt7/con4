@@ -1,17 +1,15 @@
-/*
- * class Controller controls the game play.
- * checks if move is valid or invalid.
- */
 package logic;
 
 /**
- *
+ *class Controller controls the game play.
+ *checks if move is valid or invalid.
  * @author Fabian
  */
 public class Controller
 {
 
-    private static Game game; //typ ist Game, gibt es aber noch nicht
+    private static Game game;
+    private static Opponent opponent;
 
     /**
      * default constructor creates new Game
@@ -19,6 +17,36 @@ public class Controller
     public Controller()
     {
         game = new Game();
+        opponent = new LocalOpponent(2);
+        
     }
-
+    
+    public Field setStone()
+    {
+        //is field full?
+        int x = 0;
+        while ((game.getField().getField()[x][game.getField().getField()[x].length - 1] != 0) && (x < game.getField().getField().length))
+        {
+            x++;
+        }
+        
+        //if field not full - play
+        if (game.getField().getField()[x][game.getField().getField()[x].length - 1] == 0)
+        {
+            opponent.move(game.getField());
+        }
+        else
+        {
+            //game over (draw)
+        }
+        System.out.println(game.getField());
+        
+        return game.getField();
+    }
+    
+    public static void main(String args){
+        Controller con = new Controller();
+        
+    }
+    
 }
