@@ -9,23 +9,26 @@ package graphic;
  *
  * @author Marc
  */
-public class GUI {
+public class GUI
+{
 
     private int[][] field;
     private final int FieldHeight = 6;
-    private final int FieldWidth  = 7;
-    
+    private final int FieldWidth = 7;
+
     /*
-    *
-    * 
-    * @author Marc
-    */
-    public GUI(int[][] field) {
+     *
+     * 
+     * @author Marc
+     */
+    public GUI(int[][] field)
+    {
         this.field = field;
     }
-    
-    public void paintField(){
-        
+
+    public void paintField()
+    {
+
     }
 
 }
