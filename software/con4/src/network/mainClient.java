@@ -13,6 +13,7 @@ public class mainClient
         boolean clientstatus = client.joinGame("localhost");
         System.out.println("Client: staus = " + clientstatus +"\n\n");
         
+        //Ping-pong mit anderer Seite
         for (int a=125 ; a >= 1 ; a--)
         {
             try

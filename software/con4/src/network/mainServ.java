@@ -13,6 +13,7 @@ public class mainServ
         boolean servstatus = serv.createGame();
         System.out.println("Server: staus = " + servstatus +"\n\n");
 
+        //Ping-pong mit anderer Seite
         for(int a = 0 ; a < 125 ; a++)
         {
             try
