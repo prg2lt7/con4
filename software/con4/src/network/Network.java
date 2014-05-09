@@ -1,11 +1,10 @@
 package network;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -14,49 +13,30 @@ import java.net.Socket;
  */
 public class Network extends Thread
 {
-    /*
-    * Tcp Port
-    */
+    // Tcp Port
     private static final int port = 29000;
-    
-    /* 
-    * Duration in [ms] to be active as UdpServer
-    * else switching to udp client
-    */
-    //private static final int timeout = 4000;
-    
+ 
+    // Socket used as Client/Serve
     private Socket myTcpClient;
     
-    //private InetAddress otherAddress;
-    
-    
-    /*
-    * 0x : Udp Listen for requests
-    * 
-    * 1x : Udp Send requests
-    *
-    * 2x : TcpClient
-    *
-    * 3x : TcPServer
-    *
-    * 9x : Error, Exception
-    */
-    //private int status;
+    private DataOutputStream outstream;
+    private DataInputStream instream;
 
-        
-    /*
-    * Constructor
-    */
+    // true:  Keep receiving packages
+    // false: Stop receiving packages
+    private boolean running;
+            
+            
     public Network()
     {
-        //this.status = 0;      
+        this.running = true;
     }
 
     
     /**
      *
      * @param ip String of the IP Address you want to connect (e.i. "192.168.4.12")
-     * @return The status of the connection (true = sccessful, false = connection failed & aborted)
+     * @return The status of this TCP connection (true = successful, false = connection failed & aborted)
      */
     public boolean joinGame(String ip)
     {
@@ -65,12 +45,18 @@ public class Network extends Thread
         {
             myTcpClient = new Socket(ip,port);
             System.out.println("Client: Connected");
+            
+            initStream();
+            System.out.println("Client: Stream initialized");
+
             return true;
         }
         
         catch (IOException ex)
         {
             System.err.println("Client: Connection as Client failed");
+            System.err.println("Error: " +ex.getMessage());
+            
             return false;
         }
     }
@@ -78,7 +64,7 @@ public class Network extends Thread
 
     /**
      *
-     * @return The status of the connection (true = sccessful, false = connection failed & aborted)
+     * @return The status of this TCP connection (true = successful, false = connection failed & aborted)
      */
     public boolean createGame()
     {
@@ -89,13 +75,18 @@ public class Network extends Thread
             myTcpClient = dummy.accept();
             
             System.out.println("Server: Connected");
+              
+            initStream();
+            System.out.println("Server: Stream initialized");
+            
             return true;
         }
         
         catch (IOException ex)
         {
             System.err.println("Server: Connection failed");
-            return true;
+            System.err.println("Error: " +ex.getMessage());
+            return false;
         }
     }
     
@@ -106,39 +97,14 @@ public class Network extends Thread
     */
     public int getMove()
     {
-        int column = -1;
-        //Link Writer to the Socket
-        
-        try
+        String receivemessage="255";
+        while (running)
         {
-            //PrintWriter outStream = new PrintWriter(myTcpClient.getOutputStream()); 
-         
-            //Link Writer to the Socket
-            BufferedReader inStream = new BufferedReader( 
-                new InputStreamReader(myTcpClient.getInputStream()));
-
-            //Send data
-            //outStream.println("hslu.ch"); 
-            //outStream.flush(); 
-            String line; 
-
-            //Data beeing read by Server
-            while ((line = inStream.readLine()) != null)
-            { 
-                System.out.println(line);
-            }
-                 
-            column = Integer.parseInt(line);
-            System.out.println(column);
-            
-        }
-        catch (IOException ex)
-        {
-            System.err.println("Error in Method setMove");
-            System.err.println(ex.getMessage());
+            System.out.println(receivemessage);
+            return (Integer.parseInt(receivemessage));
         }
         
-        return column;
+        return 255;
     }
     
     /*
@@ -148,11 +114,11 @@ public class Network extends Thread
     public void setMove(int column)
     {
         try
-        {
-            DataOutputStream dout = new DataOutputStream(myTcpClient.getOutputStream()); 
-            String data = (""+column);
-            dout.write(data.getBytes()); 
-            System.out.println("Server sending: " + data);
+        {            
+            int sendmessage = column;
+            outstream.write(sendmessage);
+            outstream.flush();
+            System.out.println("Server sending: " + sendmessage);
         }
         
         catch(IOException ex)
@@ -160,17 +126,11 @@ public class Network extends Thread
             System.err.println("Server: Error in Method setMove");
             System.err.println("Server: Error: " + ex.getMessage());
         }            
-    }
+    }  
     
-    /*
-    *
-    * Return the actual state of the Network connection
-    */
-    /*
-    public int getStatus()
+    private void initStream() throws IOException
     {
-        return status;
+        instream = new DataInputStream(myTcpClient.getInputStream());
+        outstream = new DataOutputStream(myTcpClient.getOutputStream());        
     }
-    */
-           
 }

@@ -8,11 +8,11 @@ public class mainClient
 {
     public static void main(String[] args)
     {
-        Network cl = new Network();
-            
-        boolean clstatus = cl.joinGame("localhost");
-        System.out.println("Client: Status" + clstatus);
-    
-        System.out.println("The move was: " + cl.getMove());
+        Network client = new Network();
+           
+        boolean clientstatus = client.joinGame("localhost");
+        System.out.println("Client: staus = " + clientstatus +"/n/n");
+        
+        System.out.println("Client: Move received was " + client.getMove());
     }
 }
