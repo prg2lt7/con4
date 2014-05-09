@@ -13,12 +13,59 @@ import java.util.Random;
 public class LocalOpponent extends Opponent
 {
     private int value;
+    private int difficulty;
     
+    /**
+     * 
+     * @param value 
+     */
     public LocalOpponent(int value)
+    {
+        this.value = value;
+        this.difficulty = 0;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public int getDifficulty()
+    {
+        return difficulty;
+    }
+
+    /**
+     * 
+     * @param difficulty 
+     */
+    public void setDifficulty(int difficulty)
+    {
+        this.difficulty = difficulty;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public int getValue()
+    {
+        return value;
+    }
+
+    /**
+     * 
+     * @param value 
+     */
+    public void setValue(int value)
     {
         this.value = value;
     }
     
+    /**
+     * 
+     * @param field
+     * @return 
+     */
     @Override
     public int move(Field field)
     {
