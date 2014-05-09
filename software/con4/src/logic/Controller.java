@@ -21,27 +21,35 @@ public class Controller
         
     }
     
-    public Game setStone()
+    /**
+     * Player or opponent intends to set a stone at position x,y
+     * Method checks for possibilty to set stone at requested position
+     * returns if stone could be set to position (true) or not (false)
+     * @param xPosition
+     * @return 
+     */
+    public Game setStone(int xPosition)
     {
         //is field full?
+        //checks if there is any free position (0) in a column
         int x = 0;
-        while ((game.getField().getField()[x][game.getField().getField()[x].length - 1] != 0) && (x < game.getField().getField().length))
+        while ((game.getField().getField()[x][game.getField().getField()[x].length - 1] != 0) &&
+                (x < game.getField().getField().length))
         {
             x++;
         }
         
-        //if field not full - play
+        //if field not full (at least one free position (0) - continue gameplay!
         if (game.getField().getField()[x][game.getField().getField()[x].length - 1] == 0)
         {
             opponent.move(game.getField());
         }
-        else
+        else //game over (draw)
         {
-            //game over (draw)
+            game.getState().setGameOver(true);
         }
-        System.out.println(game.getField());
+        return game; 
         
-        return game;
     }
     
     public boolean saveGame()
