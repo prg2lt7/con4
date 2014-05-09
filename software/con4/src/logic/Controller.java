@@ -21,7 +21,7 @@ public class Controller
         
     }
     
-    public Field setStone()
+    public Game setStone()
     {
         //is field full?
         int x = 0;
@@ -41,12 +41,17 @@ public class Controller
         }
         System.out.println(game.getField());
         
-        return game.getField();
+        return game;
     }
     
-    public static void main(String args){
-        Controller con = new Controller();
-        
+    public boolean saveGame()
+    {
+        return true;
+    }
+    
+    public Game loadGame()
+    {
+        return game;
     }
     
 }
