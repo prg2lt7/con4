@@ -158,7 +158,7 @@ public class Field
         }
         return s;
     }
-    
+
     /**
      * Check if someone has won the game. 
      * If no Player has won the Game, 0 is returned. 
@@ -167,6 +167,51 @@ public class Field
      */
     public int isWinner()
     {
+        int[] line = new int[4];
+        
+        // check horizontal lines
+        for (int x = 0; x < field.length - 4; x++)
+        {
+            for (int y = 0; y < field[x].length; y++)
+            {
+                line[0] = field[x][y];
+                line[1] = field[x + 1][y];
+                line[2] = field[x + 2][y];
+                line[3] = field[x + 3][y];
+                if (winLine(line));
+                {
+                    return field[x][y];
+                }
+            }
+        }
         return 0;
+    }
+
+    /**
+     * Check if four elements in one line are equal. 
+     * Only the four elements at the beginning are checked. 
+     * If the line is too short, false is returned. 
+     * @param line line to be checked
+     * @return true if all elements are equal
+     */
+    private boolean winLine(int[] line)
+    {
+        if (line.length < 4)
+        {
+            return false;
+        }
+        if (line[0] != line[1])
+        {
+            return false;
+        }
+        if (line[0] != line[2])
+        {
+            return false;
+        }
+        if (line[0] != line[3])
+        {
+            return false;
+        }
+        return false;
     }
 }
