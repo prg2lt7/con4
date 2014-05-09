@@ -10,8 +10,9 @@ public class mainClient
     {
         Network cl = new Network();
             
-        boolean clstatus = cl.joinGame("127.0.0.0");
-        System.out.println(clstatus);
-        
+        boolean clstatus = cl.joinGame("localhost");
+        System.out.println("Client: Status" + clstatus);
+    
+        System.out.println("The move was: " + cl.getMove());
     }
 }

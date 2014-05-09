@@ -41,7 +41,7 @@ public class Network extends Thread
     *
     * 9x : Error, Exception
     */
-    private int status;
+    //private int status;
 
         
     /*
@@ -49,7 +49,7 @@ public class Network extends Thread
     */
     public Network()
     {
-        this.status = 0;      
+        //this.status = 0;      
     }
 
     
@@ -60,17 +60,17 @@ public class Network extends Thread
      */
     public boolean joinGame(String ip)
     {
-        System.out.println("The destination address is: " + ip);
+        System.out.println("Client: The destination address is: " + ip);
         try
         {
             myTcpClient = new Socket(ip,port);
-            System.out.println("Connected");
+            System.out.println("Client: Connected");
             return true;
         }
         
         catch (IOException ex)
         {
-            System.err.println("Connection as Client failed");
+            System.err.println("Client: Connection as Client failed");
             return false;
         }
     }
@@ -84,22 +84,24 @@ public class Network extends Thread
     {
         try
         {
+            System.out.println("Server: Waiting for accept();");
             ServerSocket dummy = new ServerSocket(port);
             myTcpClient = dummy.accept();
             
-            System.out.println("Connected");
+            System.out.println("Server: Connected");
             return true;
         }
         
         catch (IOException ex)
         {
-            System.err.println("Connection as Client failed");
+            System.err.println("Server: Connection failed");
             return true;
         }
     }
     
     
     /*
+    *
     * @return Returns the column of the new Disk
     */
     public int getMove()
@@ -109,16 +111,15 @@ public class Network extends Thread
         
         try
         {
-            PrintWriter outStream = new PrintWriter( 
-            myTcpClient.getOutputStream()); 
+            //PrintWriter outStream = new PrintWriter(myTcpClient.getOutputStream()); 
          
             //Link Writer to the Socket
             BufferedReader inStream = new BufferedReader( 
                 new InputStreamReader(myTcpClient.getInputStream()));
 
             //Send data
-            outStream.println("hslu.ch"); 
-            outStream.flush(); 
+            //outStream.println("hslu.ch"); 
+            //outStream.flush(); 
             String line; 
 
             //Data beeing read by Server
@@ -126,9 +127,10 @@ public class Network extends Thread
             { 
                 System.out.println(line);
             }
+                 
+            column = Integer.parseInt(line);
+            System.out.println(column);
             
-            //Only to test function
-            column = 2;
         }
         catch (IOException ex)
         {
@@ -140,34 +142,35 @@ public class Network extends Thread
     }
     
     /*
+    *
     * @column The column the new Disk should be dropped
     */
     public void setMove(int column)
     {
         try
         {
-            DataOutputStream dout =  
-               new DataOutputStream(myTcpClient.getOutputStream()); 
+            DataOutputStream dout = new DataOutputStream(myTcpClient.getOutputStream()); 
             String data = (""+column);
             dout.write(data.getBytes()); 
-            System.out.println(data);
+            System.out.println("Server sending: " + data);
         }
         
         catch(IOException ex)
         {
-            System.err.println("Error in Method setMove");
-            System.err.println("Error: " + ex.getMessage());
-        }
-        
-        
+            System.err.println("Server: Error in Method setMove");
+            System.err.println("Server: Error: " + ex.getMessage());
+        }            
     }
     
     /*
+    *
     * Return the actual state of the Network connection
     */
+    /*
     public int getStatus()
     {
         return status;
-    }  
+    }
+    */
            
 }

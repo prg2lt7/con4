@@ -11,6 +11,8 @@ public class mainServ
         Network serv = new Network();
     
         boolean servstatus = serv.createGame();
-        System.out.println("Serverstaus:" + servstatus); 
+        System.out.println("Server: staus = " + servstatus);
+        
+        serv.setMove(3);
     }
 }
