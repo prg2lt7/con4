@@ -184,6 +184,56 @@ public class Field
                 }
             }
         }
+        
+        // check vertical lines
+        for (int x = 0; x < field.length; x++)
+        {
+            for (int y = 0; y < field[x].length - 4; y++)
+            {
+                line[0] = field[x][y];
+                line[1] = field[x][y + 1];
+                line[2] = field[x][y + 2];
+                line[3] = field[x][y + 3];
+                if (winLine(line));
+                {
+                    return field[x][y];
+                }
+            }
+        }
+        
+        // check diagonal lines from bottom left to top right
+        for (int x = 0; x < field.length - 4; x++)
+        {
+            for (int y = 0; y < field[x].length - 4; y++)
+            {
+                line[0] = field[x][y];
+                line[1] = field[x + 1][y + 1];
+                line[2] = field[x + 2][y + 2];
+                line[3] = field[x + 3][y + 3];
+                if (winLine(line));
+                {
+                    return field[x][y];
+                }
+            }
+        }
+        
+        
+        // check diagonal lines from top left to bottom right
+        for (int x = 0; x < field.length - 4; x++)
+        {
+            for (int y = 3; y < field[x].length; y++)
+            {
+                line[0] = field[x][y];
+                line[1] = field[x + 1][y - 1];
+                line[2] = field[x + 2][y - 2];
+                line[3] = field[x + 3][y - 3];
+                if (winLine(line));
+                {
+                    return field[x][y];
+                }
+            }
+        }
+        
         return 0;
     }
 
