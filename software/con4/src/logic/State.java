@@ -6,7 +6,8 @@ package logic;
  */
 public class State
 {
-    private boolean usermove;
+    private boolean userMove;
+    public boolean gameOver;
     /**
      * default constructor
      * the user has the first move if the game is against the local opponent
@@ -14,7 +15,8 @@ public class State
      */
     public State()
     {
-        usermove = true;
+        userMove = true;
+        gameOver = false;
     }
     
     /**
@@ -22,7 +24,17 @@ public class State
      * @return 
      */
     public boolean toggleState(){
-        usermove = !usermove;
-        return usermove;
+        userMove = !userMove;
+        return userMove;
+    }
+
+    public boolean isGameOver()
+    {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean gO)
+    {
+        gameOver = gO;
     }
 }
