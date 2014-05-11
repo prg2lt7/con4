@@ -9,37 +9,24 @@ import java.util.logging.Logger;
  */
 public class mainClient
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws InterruptedException
     {
         Network client = new Network();
-           
-        boolean clientstatus = client.joinGame("localhost");
-        System.out.println("Client: staus = " + clientstatus +"\n\n");
-        
-        //Ping-pong mit anderer Seite
-        
-        client.start();
-        
-        for (int a=125 ; a >= 1 ; a--)
-        {
-            System.out.println("Number received : " + client.receiveMessage());
 
+        System.out.println("Server: staus = "
+                + client.joinGame("localhost")
+                + "\n\n");
+
+        //Ping-pong mit anderer Seite
+        for (int a=125 ; a >0 ; a--)
+        {
             System.out.println("Sending number :" + a);
-            client.setMessage(a);   
-            
-            
-            try
-            {
-                client.sleep(5000);
-            } catch (InterruptedException ex)
-            {
-                Logger.getLogger(mainClient.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            
-        }
-        
-        client.stopThread();
-        System.out.print("Connection successfully closed");
+            client.sendDiskPos(a);
+
+            Thread.sleep(1000);  
+            System.out.println("Number received : " + client.receiveDiskPos());
+        }   
+        client.close();
+        System.out.print("Connection successfully closed");       
     }
 }

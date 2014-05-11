@@ -1,30 +1,33 @@
 package network;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Pascal Häfliger <pascal.haefliger.01@stud.hslu.ch>
  */
 public class mainServer
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws InterruptedException
     {
         Network server = new Network();
-    
-        boolean serverstatus = server.createGame();
-        System.out.println("Server: staus = " + serverstatus +"\n\n");
+
+        System.out.println("Server: staus = "
+                + server.createGame()
+                + "\n\n");
 
         //Ping-pong mit anderer Seite
-        server.start();
-        
         for (int a=0 ; a < 125 ; a++)
         {
-            System.out.println("Number received : " + server.receiveMessage());
+            System.out.println("Number received : " + server.receiveDiskPos());
 
             System.out.println("Sending number :" + a);
-            server.setMessage(a);
+            server.sendDiskPos(a);
             
+            Thread.sleep(1000);
         }
-        server.stopThread();
+        server.close();
         System.out.print("Connection successfully closed");       
     }
 }
