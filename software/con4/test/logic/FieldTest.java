@@ -125,17 +125,24 @@ public class FieldTest extends Exception
     public void testIsWinner()
     {
         System.out.println("isWinner");
+        
+        // Empty Field
         Field instance = new Field();
+        assertEquals(0, instance.isWinner());
         
         // Horizontal
-        instance.putStone(0, 1);
+        instance = new Field();
         instance.putStone(1, 1);
-        instance.putStone(2, 1);
         assertEquals(0, instance.isWinner());
-        instance.putStone(3, 1);
+        instance.putStone(1, 1);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(1, 1);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(1, 1);
         assertEquals(1, instance.isWinner());
         
         // Vertical
+        instance = new Field();
         instance.putStone(3, 1);
         instance.putStone(3, 1);
         instance.putStone(3, 1);
@@ -144,6 +151,7 @@ public class FieldTest extends Exception
         assertEquals(1, instance.isWinner());
         
         // Game
+        instance = new Field();
         instance.putStone(3, 1);
         instance.putStone(4, 2);
         instance.putStone(2, 1);
@@ -213,6 +221,13 @@ public class FieldTest extends Exception
         assertEquals(false, (boolean) m.invoke(instance, testarray19));
         int[] testarray20 = {0, 0, 0, 0, 1, 1, 1, 1};
         assertEquals(false, (boolean) m.invoke(instance, testarray20));
-        
+        int[] testarray21 = {1, 0, 0, 0};
+        assertEquals(false, (boolean) m.invoke(instance, testarray21));
+        int[] testarray22 = {0, 1, 0, 0};
+        assertEquals(false, (boolean) m.invoke(instance, testarray22));
+        int[] testarray23 = {0, 0, 1, 0};
+        assertEquals(false, (boolean) m.invoke(instance, testarray23));
+        int[] testarray24 = {0, 0, 0, 1};
+        assertEquals(false, (boolean) m.invoke(instance, testarray24));
     }
 }

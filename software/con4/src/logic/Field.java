@@ -14,6 +14,7 @@ public class Field
     private static final int DEFAULTWIDTH = 7;
     private static final int DEFAULTHEIGHT = 6;
     private int[][] field;
+    private int winner;
 
     /**
      * Constructor for a field. 
@@ -30,6 +31,7 @@ public class Field
                 field[i][j] = 0;
             }
         }
+        winner = 0;
     }
 
     /**
@@ -57,6 +59,7 @@ public class Field
                 field[i][j] = 0;
             }
         }
+        winner = 0;
     }
 
     /**
@@ -168,73 +171,91 @@ public class Field
     public int isWinner()
     {
         int[] line = new int[4];
+        int x;
+        int y;
         
         // check horizontal lines
-        for (int x = 0; x < field.length - 4; x++)
+        x = 0;
+        while (x < field.length - 4 && winner == 0)
         {
-            for (int y = 0; y < field[x].length; y++)
+            y = 0;
+            while (y < field[x].length && winner == 0)
             {
                 line[0] = field[x][y];
                 line[1] = field[x + 1][y];
                 line[2] = field[x + 2][y];
                 line[3] = field[x + 3][y];
-                if (winLine(line));
+                if (winLine(line))
                 {
-                    return field[x][y];
+                    winner = field[x][y];
                 }
+                y++;
             }
+            x++;
         }
         
         // check vertical lines
-        for (int x = 0; x < field.length; x++)
+        x = 0;
+        while (x < field.length && winner == 0)
         {
-            for (int y = 0; y < field[x].length - 4; y++)
+            y = 0;
+            while (y < field[x].length - 4 && winner == 0)
             {
                 line[0] = field[x][y];
                 line[1] = field[x][y + 1];
                 line[2] = field[x][y + 2];
                 line[3] = field[x][y + 3];
-                if (winLine(line));
+                if (winLine(line))
                 {
-                    return field[x][y];
+                    winner = field[x][y];
                 }
+                y++;
             }
+            x++;
         }
         
         // check diagonal lines from bottom left to top right
-        for (int x = 0; x < field.length - 4; x++)
+        x = 0;
+        while (x < field.length - 4 && winner == 0)
         {
-            for (int y = 0; y < field[x].length - 4; y++)
+            y = 0;
+            while (y < field[x].length - 4 && winner == 0)
             {
                 line[0] = field[x][y];
                 line[1] = field[x + 1][y + 1];
                 line[2] = field[x + 2][y + 2];
                 line[3] = field[x + 3][y + 3];
-                if (winLine(line));
+                if (winLine(line))
                 {
-                    return field[x][y];
+                    winner = field[x][y];
                 }
+                y++;
             }
+            x++;
         }
         
         
         // check diagonal lines from top left to bottom right
-        for (int x = 0; x < field.length - 4; x++)
+        x = 0;
+        while (x < field.length - 4 && winner == 0)
         {
-            for (int y = 3; y < field[x].length; y++)
+            y = 3;
+            while (y < field[x].length && winner == 0)
             {
                 line[0] = field[x][y];
                 line[1] = field[x + 1][y - 1];
                 line[2] = field[x + 2][y - 2];
                 line[3] = field[x + 3][y - 3];
-                if (winLine(line));
+                if (winLine(line))
                 {
-                    return field[x][y];
+                    winner = field[x][y];
                 }
+                y++;
             }
+            x++;
         }
         
-        return 0;
+        return winner;
     }
 
     /**
