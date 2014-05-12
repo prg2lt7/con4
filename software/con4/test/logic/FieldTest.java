@@ -171,10 +171,48 @@ public class FieldTest extends Exception
     {
         System.out.println("winLine");
         Field instance = new Field();
-        Method m = Field.class.getDeclaredMethod("winLine");
+        Method m = Field.class.getDeclaredMethod("winLine", Class.forName("[I"));
         m.setAccessible(true);
-        int[] testarray = new int[3];
-        m.invoke(instance, testarray);
+        int[] testarray1  = {1, 1, 1};
+        assertEquals(false, (boolean) m.invoke(instance, testarray1));
+        int[] testarray2  = {1, 1, 1, 1};
+        assertEquals(true , (boolean) m.invoke(instance, testarray2));
+        int[] testarray3  = {0, 1, 1, 1};
+        assertEquals(false, (boolean) m.invoke(instance, testarray3));
+        int[] testarray4  = {1, 0, 1, 1};
+        assertEquals(false, (boolean) m.invoke(instance, testarray4));
+        int[] testarray5  = {1, 1, 0, 1};
+        assertEquals(false, (boolean) m.invoke(instance, testarray5));
+        int[] testarray6  = {1, 1, 1, 0};
+        assertEquals(false, (boolean) m.invoke(instance, testarray6));
+        int[] testarray7  = {2, 1, 1, 1};
+        assertEquals(false, (boolean) m.invoke(instance, testarray7));
+        int[] testarray8  = {1, 2, 1, 1};
+        assertEquals(false, (boolean) m.invoke(instance, testarray8));
+        int[] testarray9  = {1, 1, 2, 1};
+        assertEquals(false, (boolean) m.invoke(instance, testarray9));
+        int[] testarray10 = {1, 1, 1, 2};
+        assertEquals(false, (boolean) m.invoke(instance, testarray10));
+        int[] testarray11 = {2, 2, 2, 2};
+        assertEquals(true , (boolean) m.invoke(instance, testarray11));
+        int[] testarray12 = {1, 1, 1, 1, 0};
+        assertEquals(true , (boolean) m.invoke(instance, testarray12));
+        int[] testarray13 = {1, 1, 1, 1, 1};
+        assertEquals(true , (boolean) m.invoke(instance, testarray13));
+        int[] testarray14 = {1, 1, 1, 1, 2};
+        assertEquals(true , (boolean) m.invoke(instance, testarray14));
+        int[] testarray15 = {0, 1, 1, 1, 1};
+        assertEquals(false, (boolean) m.invoke(instance, testarray15));
+        int[] testarray16 = {1, 1, 1, 1, 1};
+        assertEquals(true , (boolean) m.invoke(instance, testarray16));
+        int[] testarray17 = {2, 1, 1, 1, 1};
+        assertEquals(false, (boolean) m.invoke(instance, testarray17));
+        int[] testarray18 = {1, 2, 1, 1, 1};
+        assertEquals(false, (boolean) m.invoke(instance, testarray18));
+        int[] testarray19 = {0, 0, 0, 0};
+        assertEquals(false, (boolean) m.invoke(instance, testarray19));
+        int[] testarray20 = {0, 0, 0, 0, 1, 1, 1, 1};
+        assertEquals(false, (boolean) m.invoke(instance, testarray20));
         
     }
 }

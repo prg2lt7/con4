@@ -250,6 +250,10 @@ public class Field
         {
             return false;
         }
+        if (line[0] == 0)
+        {
+            return false;
+        }
         if (line[0] != line[1])
         {
             return false;
@@ -262,6 +266,6 @@ public class Field
         {
             return false;
         }
-        return false;
+        return true;
     }
 }
