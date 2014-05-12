@@ -144,31 +144,95 @@ public class FieldTest extends Exception
         // Vertical
         instance = new Field();
         instance.putStone(3, 1);
+        assertEquals(0, instance.isWinner());
         instance.putStone(3, 1);
+        assertEquals(0, instance.isWinner());
         instance.putStone(3, 1);
         assertEquals(0, instance.isWinner());
         instance.putStone(3, 1);
         assertEquals(1, instance.isWinner());
         
+        // Diagonal "Slash"
+        instance = new Field();
+        assertEquals(0, instance.isWinner());
+        instance.putStone(2, 1);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(3, 2);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(4, 2);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(4, 2);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(5, 2);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(5, 2);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(5, 2);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(3, 1);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(4, 1);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(5, 1);
+        assertEquals(1, instance.isWinner());
+        
+        // Diagonal "Backslash"
+        instance = new Field();
+        assertEquals(0, instance.isWinner());
+        instance.putStone(3, 1);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(3, 1);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(3, 1);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(4, 1);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(4, 1);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(5, 1);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(3, 2);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(4, 2);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(5, 2);
+        assertEquals(0, instance.isWinner());
+        instance.putStone(6, 2);
+        assertEquals(2, instance.isWinner());
+        
         // Game
         instance = new Field();
+        assertEquals(0, instance.isWinner());
         instance.putStone(3, 1);
+        assertEquals(0, instance.isWinner());
         instance.putStone(4, 2);
+        assertEquals(0, instance.isWinner());
         instance.putStone(2, 1);
+        assertEquals(0, instance.isWinner());
         instance.putStone(1, 2);
+        assertEquals(0, instance.isWinner());
         instance.putStone(4, 1);
+        assertEquals(0, instance.isWinner());
         instance.putStone(3, 2);
+        assertEquals(0, instance.isWinner());
         instance.putStone(5, 1);
+        assertEquals(0, instance.isWinner());
         instance.putStone(2, 2);
+        assertEquals(0, instance.isWinner());
         instance.putStone(3, 1);
+        assertEquals(0, instance.isWinner());
         instance.putStone(1, 2);
+        assertEquals(0, instance.isWinner());
         instance.putStone(1, 1);
+        assertEquals(0, instance.isWinner());
         instance.putStone(2, 2);
+        assertEquals(0, instance.isWinner());
         instance.putStone(4, 1);
+        assertEquals(0, instance.isWinner());
         instance.putStone(3, 2);
-        //assertEquals(0, instance.isWinner());
+        assertEquals(0, instance.isWinner());
         instance.putStone(2, 1);
-        //assertEquals(1, instance.isWinner());
+        assertEquals(1, instance.isWinner());
     }
 
     /**

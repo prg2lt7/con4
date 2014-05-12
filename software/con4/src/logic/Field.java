@@ -216,7 +216,7 @@ public class Field
         
         // check diagonal lines from bottom left to top right
         x = 0;
-        while (x < field.length - 4 && winner == 0)
+        while (x < field.length - 3 && winner == 0)
         {
             y = 0;
             while (y < field[x].length - 4 && winner == 0)
@@ -237,7 +237,7 @@ public class Field
         
         // check diagonal lines from top left to bottom right
         x = 0;
-        while (x < field.length - 4 && winner == 0)
+        while (x < field.length - 3 && winner == 0)
         {
             y = 3;
             while (y < field[x].length && winner == 0)
