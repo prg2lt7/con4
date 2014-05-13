@@ -5,6 +5,7 @@
 package logic;
 
 import java.util.Random;
+import sun.security.util.Length;
 
 /**
  *
@@ -62,9 +63,10 @@ public class LocalOpponent extends Opponent
     }
     
     /**
-     * 
-     * @param field
-     * @return 
+     * Function that calculates the next stone. 
+     * If the Field is filled, the Function will return -1. 
+     * @param field Field in which the stone should be placed. 
+     * @return Colomn in which the stone should be placed. 
      */
     @Override
     public int move(Field field)
@@ -72,6 +74,18 @@ public class LocalOpponent extends Opponent
         int x;
         int y;
         boolean filled = false;
+        boolean full = true;
+        for (x = 0; x < field.getField().length; x++)
+        {
+            if (field.getField()[x][field.getField()[x].length - 1] == 0)
+            {
+                full = false;
+            }
+        }
+        if (full)
+        {
+            return -1;
+        }
         Random randomGen = new Random();
         do
         {
