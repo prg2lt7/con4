@@ -1,8 +1,5 @@
 package network;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Pascal Häfliger <pascal.haefliger.01@stud.hslu.ch>
@@ -12,7 +9,7 @@ public class mainClient
     public static void main(String[] args) throws InterruptedException
     {
         Network client = new Network();
-
+        
         System.out.println("Server: staus = "
                 + client.joinGame("localhost")
                 + "\n\n");

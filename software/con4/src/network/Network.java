@@ -23,8 +23,7 @@ public class Network
     // true:  Keep receiving packages
     // false: Stop receiving packages
     private boolean listening;
-        
-                  
+                         
     public Network()
     {
         super();
@@ -44,7 +43,7 @@ public class Network
         {
             myTcpClient = new Socket(ip,port);
             System.out.println("Client: Connected");
-            
+                        
             initStream();
             System.out.println("Client: Stream initialized");
 
@@ -72,7 +71,7 @@ public class Network
             myTcpClient = dummy.accept();
             System.out.println("Server: Connected");
               
-            initStream();
+            initStream();           
             System.out.println("Server: Stream initialized");
             
             return true;
@@ -158,9 +157,7 @@ public class Network
         this.listening = listening;
     }
       
-
-
-     
+          
     /**
      * 
      * @return Status of the closing procedure

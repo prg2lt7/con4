@@ -1,8 +1,5 @@
 package network;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Pascal Häfliger <pascal.haefliger.01@stud.hslu.ch>
