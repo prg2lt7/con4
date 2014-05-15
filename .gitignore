@@ -20,4 +20,5 @@ hs_err_pid*
 *.pdf
 *.toc
 
-/software/con4/build/
+
+/software/con4/dist/

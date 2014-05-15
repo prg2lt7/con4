@@ -5,60 +5,56 @@
  */
 package graphic;
 
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.PointerInfo;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import javax.swing.JFrame;
+import logic.Controller;
 
 /**
  *
  * @author Marc
  */
-public class PlayfieldGraphics extends javax.swing.JFrame
+public class PlayfieldGraphics extends JFrame
 {
+
+    Controller gamecontrol;
+    GameStone[][] graphicField;
 
     /**
      * Creates new form PlayfieldGraphics
      */
-    public PlayfieldGraphics()
+    public PlayfieldGraphics(Controller gameControl)
     {
+        
+        
+        
+        this.gamecontrol = gameControl;
+        graphicField = new GameStone[7][6];
+        GameStoneListener stoneListener = new GameStoneListener(gamecontrol, graphicField, this);
         initComponents();
-        jPanel1.addMouseListener(new MouseListener()
+
+        
+
+        GridLayout grid = new GridLayout(6, 7, 10, 10);
+
+        jPanel1.setLayout(grid);
+        for (int i = 5; i >= 0; i--)
         {
-
-            @Override
-            public void mouseClicked(MouseEvent e)
+            for (int j = 0; j < 7; j++)
             {
+                graphicField[j][i] = new GameStone(j, stoneListener);
+                jPanel1.add(graphicField[j][i]);
             }
 
-            @Override
-            public void mousePressed(MouseEvent e)
-            {
+        }
 
-            }
+    }
 
-            @Override
-            public void mouseReleased(MouseEvent e)
-            {
-                PointerInfo a = MouseInfo.getPointerInfo();
-                Point b = a.getLocation();
-                int x = (int) b.getX();
-                int y = (int) b.getY();
-                System.out.println(y + " Y-Coordinate");
-                System.out.println(x + " X-Coordinte");
-            }
+    @Override
+    public void paint(Graphics g)
+    {
+        super.paintComponents(g);
 
-            @Override
-            public void mouseEntered(MouseEvent e)
-            {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e)
-            {
-            }
-        });
     }
 
     /**
@@ -68,7 +64,8 @@ public class PlayfieldGraphics extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -93,8 +90,10 @@ public class PlayfieldGraphics extends javax.swing.JFrame
         jMenu1.setText("File");
 
         jMenuItem1.setText("New Game");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jMenuItem1ActionPerformed(evt);
             }
         });
@@ -128,51 +127,7 @@ public class PlayfieldGraphics extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[])
-    {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try
-        {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-            {
-                if ("Nimbus".equals(info.getName()))
-                {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex)
-        {
-            java.util.logging.Logger.getLogger(PlayfieldGraphics.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex)
-        {
-            java.util.logging.Logger.getLogger(PlayfieldGraphics.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex)
-        {
-            java.util.logging.Logger.getLogger(PlayfieldGraphics.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex)
-        {
-            java.util.logging.Logger.getLogger(PlayfieldGraphics.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                new PlayfieldGraphics().setVisible(true);
-            }
-        });
-
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;

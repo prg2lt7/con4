@@ -22,7 +22,7 @@ public class LocalOpponent extends Opponent
     public LocalOpponent(int value)
     {
         this.value = value;
-        this.difficulty = 2;
+        this.difficulty = 1;
     }
 
     /**
@@ -65,7 +65,7 @@ public class LocalOpponent extends Opponent
      * Function that calculates the next stone. 
      * If the Field is filled, the Function will return -1. 
      * @param field Field in which the stone should be placed. 
-     * @return Colomn in which the stone should be placed. 
+     * @return Column in which the stone should be placed. 
      */
     @Override
     public int move(Field field)
@@ -114,12 +114,17 @@ public class LocalOpponent extends Opponent
                 int[] choice = new int[field.getField().length];
                 for (int i = 0; i < field.getField().length; i++)
                 {
-                    findBestStone1(field.getField(), true, 4);
+                    findBestStone1(field.getField(), true, 10);
                 }
                 int max = choice[0];
+                x = 0;
                 for (int i = 0; i < field.getField().length; i++)
                 {
-                    max = choice[i] > max ? choice[i] : max;
+                    if (choice[i] > max)
+                    {
+                        max = choice[i];
+                        x = i;
+                    }
                 }
                 break;
                 
@@ -256,42 +261,42 @@ public class LocalOpponent extends Opponent
         if ((line[0] == value && line[2] == value && line[3] == value && line[1] == 0) ||
             (line[0] == value && line[1] == value && line[3] == value && line[2] == 0))
         {
-            return 40;
+            return 20;
         }
         
         // Three of my opponent's in a line with one open gap
         if ((line[0] == line[2] && line[0] == line[3] && line[1] == 0) ||
             (line[0] == line[1] && line[0] == line[3] && line[2] == 0))
         {
-            return -40;
+            return -20;
         }
         
         // Three of my own in a row, open end
         if ((line[0] == value && line[1] == value && line[2] == value && line[3] == 0) ||
             (line[0] == 0 && line[1] == value && line[2] == value && line[3] == value))
         {
-            return 30;
+            return 20;
         }
         
         // Three of my opponent's in a row, open end
         if ((line[0] == line[1] && line[0] == line[2] && line[3] == 0) || 
             (line[0] == 0 && line[1] == line[2] && line[1] == line[3]))
         {
-            return -30;
+            return -20;
         }
         
         // Three of my own in a row, terminated
         if ((line[0] == value && line[1] == value && line[2] == value && line[3] != value) ||
             (line[0] != value && line[1] == value && line[2] == value && line[3] == value))
         {
-            return 5;
+            return 1;
         }
         
         // Three of my opponent's in a row, terminated
         if ((line[0] == line[1] && line[0] == line[2] && line[3] != line[0]) || 
             (line[0] != line[1] && line[1] == line[2] && line[1] == line[3]))
         {
-            return -5;
+            return -1;
         }
         
         return 0;

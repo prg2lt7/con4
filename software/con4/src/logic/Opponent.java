@@ -16,5 +16,6 @@ public abstract class Opponent
     }
     
     public abstract int move(Field field);
+    public abstract int getValue();
     
 }
