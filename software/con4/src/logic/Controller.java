@@ -66,12 +66,19 @@ public class Controller
     
     public static void main (String[] args){
         Controller c = new Controller();
-        Game g = c.setStone(3);
+        Game g;
+        g = c.setStone(3);
+        System.out.println(g.getField());
         g = c.setStone(5);
+        System.out.println(g.getField());
         g = c.setStone(4);
+        System.out.println(g.getField());
         g = c.setStone(2);
+        System.out.println(g.getField());
         g = c.setStone(1);
+        System.out.println(g.getField());
         g = c.setStone(0);
+        System.out.println(g.getField());
         g = c.setStone(6);
         System.out.println(g.getField());
     }
