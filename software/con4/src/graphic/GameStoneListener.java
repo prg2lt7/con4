@@ -20,6 +20,8 @@ public class GameStoneListener implements MouseListener
 {
 
     Controller gamecontrol;
+    GameStone[][] graphicField;
+    PlayfieldGraphics graphics;
 
     public void setGamecontrol(Controller gamecontrol)
     {
@@ -30,8 +32,6 @@ public class GameStoneListener implements MouseListener
     {
         this.graphicField = graphicField;
     }
-    GameStone[][] graphicField;
-    PlayfieldGraphics graphics;
 
     public GameStoneListener(Controller gamecontrol, GameStone[][] graphicField, PlayfieldGraphics graphics)
     {
@@ -40,29 +40,43 @@ public class GameStoneListener implements MouseListener
         this.graphics = graphics;
     }
 
+    /**
+     * Paints the playfield accordingly to the gamefield it received
+     *
+     * @param gameField Fieldstatus that will be painted
+     */
     public void paintPlayfield(Game gameField)
     {
         int[][] k = gameField.getField().getField();
 
+        //iterates through all fields and sets the color
         for (int i = 0; i < k.length; i++)
         {
             for (int j = 0; j < k[0].length; j++)
             {
-                if (k[i][j] == 1)
-                {
-                    graphicField[i][j].setColor(Color.yellow);
-                } else if (k[i][j] == 2)
-                {
-                    graphicField[i][j].setColor(Color.red);
+                //used to story which color the element should have
+                Color tempColor;
 
-                } else if (k[i][j] == -1)
+                //New Color-Definitions have to be added here to have any effect
+                switch (k[i][j])
                 {
-                    graphicField[i][j].setColor(Color.green);
+                    case -1:
+                        tempColor = Color.GREEN;
+                        break;
+
+                    case 1:
+                        tempColor = Color.YELLOW;
+                        break;
+                    case 2:
+                        tempColor = Color.RED;
+                        break;
+
+                    default:
+                        tempColor = Color.WHITE;
                 }
-                else if (k[i][j] == 0)
-                {
-                    graphicField[i][j].setColor(Color.white);
-                }
+                
+                //The component gets the color from the logical playfield
+                graphicField[i][j].setColor(tempColor);
 
             }
         }
@@ -71,17 +85,19 @@ public class GameStoneListener implements MouseListener
     }
 
     @Override
-    public void mouseClicked(MouseEvent e)
+    public void mousePressed(MouseEvent e)
     {
+        //Each playstone is a component with a MouseListener added to it,
+        //through that we are able to get which stone was clicked
+        GameStone a = (GameStone) e.getComponent();
+        paintPlayfield(gamecontrol.setStone(a.getRow()));
 
     }
 
+    // <editor-fold defaultstate="collapsed" desc="Not implemented MouseEvents">
     @Override
-    public void mousePressed(MouseEvent e)
+    public void mouseClicked(MouseEvent e)
     {
-        GameStone a = (GameStone) e.getComponent();
-        Game gameField = gamecontrol.setStone(a.getRow());
-        paintPlayfield(gameField);
 
     }
 
@@ -102,5 +118,6 @@ public class GameStoneListener implements MouseListener
     {
 
     }
+// </editor-fold>
 
 }

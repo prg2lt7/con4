@@ -10,7 +10,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.MouseListener;
-import logic.Controller;
 
 /**
  * Represents one playstone on the connect four playfield.
