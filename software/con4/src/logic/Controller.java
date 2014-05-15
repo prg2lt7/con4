@@ -39,7 +39,6 @@ public class Controller
         {
             x++;
         }
-        
         game.getField().putStone(xPosition, game.getState().getUserMove());
         
         //if field not full (at least one free position (0) - continue gameplay!
@@ -67,7 +66,13 @@ public class Controller
     
     public static void main (String[] args){
         Controller c = new Controller();
-        Game g = c.setStone(5);
+        Game g = c.setStone(3);
+        g = c.setStone(5);
+        g = c.setStone(4);
+        g = c.setStone(2);
+        g = c.setStone(1);
+        g = c.setStone(0);
+        g = c.setStone(6);
         System.out.println(g.getField());
     }
 }

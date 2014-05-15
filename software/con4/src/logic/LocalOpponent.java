@@ -22,7 +22,7 @@ public class LocalOpponent extends Opponent
     public LocalOpponent(int value)
     {
         this.value = value;
-        this.difficulty = 2;
+        this.difficulty = 1;
     }
 
     /**
@@ -65,7 +65,7 @@ public class LocalOpponent extends Opponent
      * Function that calculates the next stone. 
      * If the Field is filled, the Function will return -1. 
      * @param field Field in which the stone should be placed. 
-     * @return Colomn in which the stone should be placed. 
+     * @return Column in which the stone should be placed. 
      */
     @Override
     public int move(Field field)
