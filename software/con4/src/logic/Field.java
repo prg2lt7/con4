@@ -72,6 +72,33 @@ public class Field
     }
 
     /**
+     * Returns the winner on the actual field. 
+     * @return winner
+     */
+    public int getWinner()
+    {
+        return winner;
+    }
+
+    /**
+     * Sets the field. 
+     * @param field Field to be set
+     */
+    public void setField(int[][] field)
+    {
+        this.field = field;
+    }
+
+    /**
+     * Sets ghe winner. 
+     * @param winner Winner to set
+     */
+    public void setWinner(int winner)
+    {
+        this.winner = winner;
+    }
+
+    /**
      * Put one stone in a column.
      * @param x column in which the stone has to be placed
      * @param value color of the stone to be inserted, indicates player
