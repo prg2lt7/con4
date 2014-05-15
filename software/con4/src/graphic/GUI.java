@@ -5,6 +5,8 @@
  */
 package graphic;
 
+import logic.Game;
+
 /**
  *
  * @author Marc
@@ -12,18 +14,17 @@ package graphic;
 public class GUI
 {
 
-    private int[][] field;
-    private final int FieldHeight = 6;
-    private final int FieldWidth = 7;
-
+    private Game game;
+ 
     /*
      *
      * 
      * @author Marc
      */
-    public GUI(int[][] field)
-    {
-        this.field = field;
+   
+    
+    public GUI(Game game){
+        this.game = game;
     }
 
     public void paintField()
