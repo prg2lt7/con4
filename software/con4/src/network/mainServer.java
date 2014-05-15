@@ -18,8 +18,9 @@ public class mainServer
         t.start();
         
         //Ping-pong mit anderer Seite
-        for(int a = 0 ; a < 127 ; a++)
+        for(int a = 0 ; a < 7 ; a++)
         {
+            System.out.println("Sending: " + a);
             server.sendMsg(a);
             t.sleep(1000);
             System.out.println("Received: " + server.receMsg());            

@@ -22,19 +22,22 @@ public class Network implements Runnable
 
     // true:  Keep receiving packages
     // false: Stop receiving packages
-    private boolean listening;
     private boolean running;
     
     
-    private int sendMsg;
-    private int receMsg;
+    private static final int def_value = 124;
+    private static final int err_value = 125;
+    private static final int no_new_Disk_value = 100;
+    
+    
+    private int sendmsg;
+    private int recemsg;
                          
     public Network()
     {
-        this.listening = true;
         this.running = true;
-        this.sendMsg = 124;
-        this.receMsg = 124;
+        this.sendmsg = def_value;
+        this.recemsg = def_value;
     }
     
     
@@ -77,6 +80,7 @@ public class Network implements Runnable
             ServerSocket dummy = new ServerSocket(port);
             myTcpClient = dummy.accept();
             System.out.println("Server: Connected");
+            dummy.close();
               
             initStream();           
             System.out.println("Server: Stream initialized");
@@ -90,66 +94,6 @@ public class Network implements Runnable
             return false;
         }
     }
-   
-    
-    /**
-     *
-     * @return Returns the column of the new Disk:
-           125 Error
-           124 Initialize value
-           120 Loop stopped (listening=false)
-           100 none new Disk received
-           1,2,..,7 Legal move
-     */  
-    private int receiveDiskPos()
-    {
-        while (listening)
-        {
-            try
-            {
-                //WARNING: The following IO-operation puts this Thread to the blocked life-cycle!
-                return(instream.readByte());
-            }
-            
-            catch (IOException ex)
-            {
-                System.err.println("Exception in Method getMove " + ex.getMessage());
-                return 125;
-            }
-            
-        }  
-        //Loop stopped
-        return 120;
-    }
-    
-    public synchronized int receMsg()
-    {
-        return this.receMsg;
-    }
-   
-    
-    /**
-     *
-     * @param column The column the new Disk should be dropped
-     */  
-    private void sendDiskPos(int column)
-    {
-        try
-        {            
-            outstream.write(column);
-            outstream.flush();
-        }
-        
-        catch(IOException ex)
-        {
-            System.err.println("Error in Method setMove: " + ex.getMessage());
-        }            
-    }
-    
-    public synchronized void sendMsg(int sendMsg)
-    {
-        this.sendMsg = sendMsg;
-    }
     
     
     /**
@@ -161,18 +105,66 @@ public class Network implements Runnable
         instream = new DataInputStream(myTcpClient.getInputStream());
         outstream = new DataOutputStream(myTcpClient.getOutputStream());        
     }
-        
+   
     
     /**
      *
-     * @param listening State of the method "getMove"
-     *          true: Method is looping
-     *          false: Loop will stop
-     */
-    public void setListening(boolean listening)
+     * @return Returns the column of the new Disk:
+     */  
+    private void receiveDiskPos()
     {
-        this.listening = listening;
+        try
+        {
+            //WARNING: The following IO-operation puts this Thread to the blocked life-cycle!
+            recemsg = instream.readByte();
+        }
+
+        catch (IOException ex)
+        {
+            System.err.println("Exception in Method getMove " + ex.getMessage());
+            recemsg =  err_value;
+        }  
     }
+   
+    
+    /**
+     *
+     * @param column The column the new Disk should be dropped
+     */  
+    private void sendDiskPos()
+    {
+        try
+        {            
+            outstream.write(sendmsg);
+            outstream.flush();
+            sendmsg = no_new_Disk_value;
+        }
+        
+        catch(IOException ex)
+        {
+            System.err.println("Error in Method setMove: " + ex.getMessage());
+            sendmsg = err_value;
+        }            
+    }
+    
+    /**
+     * 
+     * @param sendMsg The message that you would like send over the network
+     */
+    public void sendMsg(int sendMsg)
+    {
+        this.sendmsg = sendMsg;     
+    }
+    
+    /**
+     * 
+     * @return The message that you received over the network.
+     */
+    public int receMsg()
+    {
+        return recemsg;
+    }
+
     
     /**
      * Stops the Thread
@@ -210,9 +202,17 @@ public class Network implements Runnable
     {
         while (running)
         {
-            sendDiskPos(sendMsg);
-            receMsg = receiveDiskPos();
+            if(sendmsg >= 0 && sendmsg >= 7)
+            {
+                sendDiskPos();
+            }
+            if(recemsg >= 8 || recemsg < 0)
+            {
+                receiveDiskPos();
+            }            
         }
-        this.close();
+        
+        //Close the socket
+        close();
     }
 }
