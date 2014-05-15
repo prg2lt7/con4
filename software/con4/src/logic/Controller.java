@@ -1,5 +1,10 @@
 package logic;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 
 /**
  *class Controller controls the game play.
@@ -56,7 +61,31 @@ public class Controller
     
     public boolean saveGame()
     {
-        return true;
+        String fileName = "saveGame.dat";
+        File gameFile = new File(fileName);
+        if (!gameFile.exists())
+        {
+            try
+            {
+                // Open a file to write game into
+                FileOutputStream saveFile = new FileOutputStream(fileName);
+
+                // Create an ObjectOutputStream to put game-object into file.
+                ObjectOutputStream save = new ObjectOutputStream(saveFile);
+
+                // Save current game to file via FileOutputStream
+                save.writeObject(game);
+                
+                // Close the file.
+                save.close();
+                return true;
+            }
+            catch (IOException ex)
+            {
+                System.out.println("File already exists. Creating file failed");
+            }
+        }
+        return false;
     }
     
     public Game loadGame()

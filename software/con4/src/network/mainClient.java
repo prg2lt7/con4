@@ -18,10 +18,11 @@ public class mainClient
         t.start();
         
         //Ping-pong mit anderer Seite
-        for(int a = 0 ; a < 127 ; a++)
+        for(int a = 7 ; a > 1 ; a--)
         {
             System.out.println("Received: " + client.receMsg()); 
             t.sleep(1000);
+            System.out.println("Sending: " + a);
             client.sendMsg(a);            
         }
         client.stopThread();
