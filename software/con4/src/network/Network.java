@@ -9,7 +9,7 @@ import java.net.Socket;
 /**
  * @author Pascal Häfliger <pascal.haefliger.01@stud.hslu.ch>
  */
-public class Network
+public class Network implements Runnable
 {
     // Tcp Port
     private static final int port = 29000;
@@ -23,11 +23,18 @@ public class Network
     // true:  Keep receiving packages
     // false: Stop receiving packages
     private boolean listening;
+    private boolean running;
+    
+    
+    private int sendMsg;
+    private int receMsg;
                          
     public Network()
     {
-        super();
         this.listening = true;
+        this.running = true;
+        this.sendMsg = 124;
+        this.receMsg = 124;
     }
     
     
@@ -94,7 +101,7 @@ public class Network
            100 none new Disk received
            1,2,..,7 Legal move
      */  
-    public int receiveDiskPos()
+    private int receiveDiskPos()
     {
         while (listening)
         {
@@ -114,13 +121,18 @@ public class Network
         //Loop stopped
         return 120;
     }
+    
+    public synchronized int receMsg()
+    {
+        return this.receMsg;
+    }
    
     
     /**
      *
      * @param column The column the new Disk should be dropped
      */  
-    public void sendDiskPos(int column)
+    private void sendDiskPos(int column)
     {
         try
         {            
@@ -132,6 +144,11 @@ public class Network
         {
             System.err.println("Error in Method setMove: " + ex.getMessage());
         }            
+    }
+    
+    public synchronized void sendMsg(int sendMsg)
+    {
+        this.sendMsg = sendMsg;
     }
     
     
@@ -156,6 +173,14 @@ public class Network
     {
         this.listening = listening;
     }
+    
+    /**
+     * Stops the Thread
+     */
+    public void stopThread()
+    {
+        this.running = false;
+    }
       
           
     /**
@@ -164,7 +189,7 @@ public class Network
      *          true: connection successfully closed
      *          false: failed to close the connection correctly
      */
-    public boolean close()
+    private boolean close()
     {
         try
         {
@@ -178,4 +203,16 @@ public class Network
             return false;
         }
     }    
+    
+
+    @Override
+    public void run()
+    {
+        while (running)
+        {
+            sendDiskPos(sendMsg);
+            receMsg = receiveDiskPos();
+        }
+        this.close();
+    }
 }

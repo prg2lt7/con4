@@ -14,17 +14,18 @@ public class mainServer
                 + server.createGame()
                 + "\n\n");
 
+        Thread t = new Thread(server);
+        t.start();
+        
         //Ping-pong mit anderer Seite
-        for (int a=0 ; a < 125 ; a++)
+        for(int a = 0 ; a < 127 ; a++)
         {
-            System.out.println("Number received : " + server.receiveDiskPos());
-
-            System.out.println("Sending number :" + a);
-            server.sendDiskPos(a);
-            
-            Thread.sleep(1000);
+            server.sendMsg(a);
+            t.sleep(1000);
+            System.out.println("Received: " + server.receMsg());            
         }
-        server.close();
+        server.stopThread();
+        
         System.out.print("Connection successfully closed");       
     }
 }
