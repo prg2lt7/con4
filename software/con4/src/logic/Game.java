@@ -20,36 +20,31 @@ public class Game
 
     }
 
-    /**
-     * constructor for customized field size (x*y)
-     * @param width
-     * @param height 
-     */
     public Game(int width, int height)
     {
         field = new Field(width, height);
         state = new State();
     }
 
-    
-    
-    //Getter und Setter Methods
-    
-    /**
-     * returns the field of the Game
-     * @return 
-     */
     public Field getField()
     {
         return field;
     }
+
     
-    /**
-     * returns game status (which palyer has the move)
-     * @return 
-     */
+
     public State getState()
     {
         return state;
     }
+
+    
+    
+    
+
+
+
+
+
+
 }
