@@ -63,5 +63,11 @@ public class Controller
     public Game loadGame()
     {
         return game;
-    }    
+    }
+    
+    public static void main (String[] args){
+        Controller c = new Controller();
+        Game g = c.setStone(5);
+        System.out.println(g.getField());
+    }
 }
