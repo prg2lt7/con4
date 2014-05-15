@@ -117,9 +117,14 @@ public class LocalOpponent extends Opponent
                     findBestStone1(field.getField(), true, 4);
                 }
                 int max = choice[0];
+                x = 0;
                 for (int i = 0; i < field.getField().length; i++)
                 {
-                    max = choice[i] > max ? choice[i] : max;
+                    if (choice[i] > max)
+                    {
+                        max = choice[i];
+                        x = i;
+                    }
                 }
                 break;
                 

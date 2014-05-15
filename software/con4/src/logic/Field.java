@@ -86,7 +86,13 @@ public class Field
      */
     public void setField(int[][] field)
     {
-        this.field = field;
+        for (int x = 0; x < this.field.length; x++)
+        {
+            for (int y = 0; y < this.field[x].length; y++)
+            {
+                this.field[x][y] = field[x][y];
+            }
+        }
     }
 
     /**
