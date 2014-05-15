@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import logic.Controller;
+import logic.Game;
 
 /**
  *
@@ -19,23 +20,23 @@ public class PlayfieldGraphics extends JFrame
 
     Controller gamecontrol;
     GameStone[][] graphicField;
+    GameStoneListener stoneListener;
 
     /**
      * Creates new form PlayfieldGraphics
+     *
+     * @param gameControl is used to handle the game states
      */
     public PlayfieldGraphics(Controller gameControl)
     {
-        
-        
-        
+
+        initComponents();
         this.gamecontrol = gameControl;
         graphicField = new GameStone[7][6];
-        GameStoneListener stoneListener = new GameStoneListener(gamecontrol, graphicField, this);
-        initComponents();
-
-        
+        stoneListener = new GameStoneListener(gamecontrol, graphicField, this);
 
         GridLayout grid = new GridLayout(6, 7, 10, 10);
+        
 
         jPanel1.setLayout(grid);
         for (int i = 5; i >= 0; i--)
@@ -47,6 +48,7 @@ public class PlayfieldGraphics extends JFrame
             }
 
         }
+        
 
     }
 
@@ -124,10 +126,15 @@ public class PlayfieldGraphics extends JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+        switch (evt.getActionCommand())
+        {
+            case "New Game":
+                resetPlayfield();
+                break;
+            default:
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
@@ -137,4 +144,15 @@ public class PlayfieldGraphics extends JFrame
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
+    private void resetPlayfield()
+    {
+        gamecontrol = new Controller();
+      stoneListener.setGamecontrol(gamecontrol);
+      stoneListener.paintPlayfield(new Game());
+     
+      repaint();
+        
+    }
+        
 }

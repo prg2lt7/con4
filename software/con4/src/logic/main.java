@@ -20,8 +20,6 @@ public class main
     {
         Controller gameControl = new Controller();
         PlayfieldGraphics game = new PlayfieldGraphics(gameControl);
-        
-        
         game.setVisible(true);
 
     }
