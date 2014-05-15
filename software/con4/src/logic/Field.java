@@ -109,7 +109,7 @@ public class Field
     public boolean putStone(int x, int value)
     {
         int y = 0;
-        if (x < field.length)
+        if (x < field.length && x >= 0)
         {
             while (y < field[x].length && field[x][y] != 0)
             {
