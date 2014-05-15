@@ -5,24 +5,10 @@
  */
 package graphic;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.PointerInfo;
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.Iterator;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.event.MouseInputListener;
 import logic.Controller;
-import logic.Game;
 
 /**
  *
@@ -39,77 +25,15 @@ public class PlayfieldGraphics extends JFrame
      */
     public PlayfieldGraphics(Controller gameControl)
     {
+        
+        
+        
         this.gamecontrol = gameControl;
         graphicField = new GameStone[7][6];
+        GameStoneListener stoneListener = new GameStoneListener(gamecontrol, graphicField, this);
         initComponents();
 
-        MouseListener Mouse = new MouseInputListener()
-        {
-
-            @Override
-            public void mouseClicked(MouseEvent e)
-            {
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e)
-            {
-                GameStone a = (GameStone) e.getComponent();
-                Game gameField = gamecontrol.setStone(a.getRow());
-                int[][] k = gameField.getField().getField();
-
-                for (int i = 0; i < k.length; i++)
-                {
-                    for (int j = 0; j < k[0].length; j++)
-                    {
-                        if (k[i][j] == 1)
-                        {
-                            graphicField[i][j].setColor(Color.yellow);
-                        } else if (k[i][j] == 2)
-                        {
-                            graphicField[i][j].setColor(Color.red);
-
-                        }
-
-                    }
-                }
-
-                repaint();
-
-                System.out.println(a.getRow());
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e)
-            {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e)
-            {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e)
-            {
-
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e)
-            {
-
-            }
-
-            @Override
-            public void mouseMoved(MouseEvent e)
-            {
-
-            }
-        };
+        
 
         GridLayout grid = new GridLayout(6, 7, 10, 10);
 
@@ -118,7 +42,7 @@ public class PlayfieldGraphics extends JFrame
         {
             for (int j = 0; j < 7; j++)
             {
-                graphicField[j][i] = new GameStone(j, Mouse);
+                graphicField[j][i] = new GameStone(j, stoneListener);
                 jPanel1.add(graphicField[j][i]);
             }
 

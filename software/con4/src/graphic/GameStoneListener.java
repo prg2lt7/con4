@@ -21,9 +21,12 @@ public class GameStoneListener implements MouseListener
     Controller gamecontrol;
     GameStone[][] graphicField;
     PlayfieldGraphics graphics;
-    public GameStoneListener(Controller gamecontrol, GameStone[][] graphicField){
+    
+    
+    public GameStoneListener(Controller gamecontrol, GameStone[][] graphicField, PlayfieldGraphics graphics){
         this.gamecontrol = gamecontrol;
         this.graphicField = graphicField;
+        this.graphics = graphics;
     }
 
     @Override
@@ -57,7 +60,7 @@ public class GameStoneListener implements MouseListener
 
                 graphics.repaint();
 
-                System.out.println(a.getRow());
+               
             }
 
             @Override
