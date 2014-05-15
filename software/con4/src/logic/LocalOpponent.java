@@ -114,7 +114,7 @@ public class LocalOpponent extends Opponent
                 int[] choice = new int[field.getField().length];
                 for (int i = 0; i < field.getField().length; i++)
                 {
-                    findBestStone1(field.getField(), true, 4);
+                    findBestStone1(field.getField(), true, 10);
                 }
                 int max = choice[0];
                 x = 0;
@@ -261,42 +261,42 @@ public class LocalOpponent extends Opponent
         if ((line[0] == value && line[2] == value && line[3] == value && line[1] == 0) ||
             (line[0] == value && line[1] == value && line[3] == value && line[2] == 0))
         {
-            return 40;
+            return 20;
         }
         
         // Three of my opponent's in a line with one open gap
         if ((line[0] == line[2] && line[0] == line[3] && line[1] == 0) ||
             (line[0] == line[1] && line[0] == line[3] && line[2] == 0))
         {
-            return -40;
+            return -20;
         }
         
         // Three of my own in a row, open end
         if ((line[0] == value && line[1] == value && line[2] == value && line[3] == 0) ||
             (line[0] == 0 && line[1] == value && line[2] == value && line[3] == value))
         {
-            return 30;
+            return 20;
         }
         
         // Three of my opponent's in a row, open end
         if ((line[0] == line[1] && line[0] == line[2] && line[3] == 0) || 
             (line[0] == 0 && line[1] == line[2] && line[1] == line[3]))
         {
-            return -30;
+            return -20;
         }
         
         // Three of my own in a row, terminated
         if ((line[0] == value && line[1] == value && line[2] == value && line[3] != value) ||
             (line[0] != value && line[1] == value && line[2] == value && line[3] == value))
         {
-            return 5;
+            return 1;
         }
         
         // Three of my opponent's in a row, terminated
         if ((line[0] == line[1] && line[0] == line[2] && line[3] != line[0]) || 
             (line[0] != line[1] && line[1] == line[2] && line[1] == line[3]))
         {
-            return -5;
+            return -1;
         }
         
         return 0;
