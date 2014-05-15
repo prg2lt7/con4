@@ -1,7 +1,5 @@
 package logic;
 
-import java.net.DatagramPacket;
-import java.net.InetAddress;
 
 /**
  *class Controller controls the game play.
@@ -42,11 +40,13 @@ public class Controller
             x++;
         }
         
+        game.getField().putStone(xPosition, game.getState().getUserMove());
+        
         //if field not full (at least one free position (0) - continue gameplay!
         if (game.getField().getField()[x][game.getField().getField()[x].length - 1] == 0)
         {
-            opponent.move(game.getField());
-        }
+            game.getField().putStone(opponent.move(game.getField()), opponent.getValue());
+        }  
         else //game over (draw)
         {
             game.getState().setGameOver(true);

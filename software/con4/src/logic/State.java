@@ -31,9 +31,13 @@ public class State
         return userMove;
     }
 
-    public boolean getUserMove()
+    public int getUserMove()
     {
-        return userMove;
+        if (userMove == true)
+        {
+            return 1;
+        }
+        return 2;
     }
 
     public boolean isGameOver()
