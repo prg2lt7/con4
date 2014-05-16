@@ -22,7 +22,13 @@ public class NetworkOpponent extends Opponent
     @Override
     public int move(Field field)
     {
-        return(100);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getValue()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

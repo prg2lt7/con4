@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package graphic;
 
 import java.awt.Color;
@@ -14,73 +13,111 @@ import logic.Game;
 
 /**
  * Is used to handle the events that occour in the GameStone.java class
+ *
  * @author Marc
  */
 public class GameStoneListener implements MouseListener
 {
+
     Controller gamecontrol;
     GameStone[][] graphicField;
     PlayfieldGraphics graphics;
-    
-    
-    public GameStoneListener(Controller gamecontrol, GameStone[][] graphicField, PlayfieldGraphics graphics){
+
+    public void setGamecontrol(Controller gamecontrol)
+    {
+        this.gamecontrol = gamecontrol;
+    }
+
+    public void setGraphicField(GameStone[][] graphicField)
+    {
+        this.graphicField = graphicField;
+    }
+
+    public GameStoneListener(Controller gamecontrol, GameStone[][] graphicField, PlayfieldGraphics graphics)
+    {
         this.gamecontrol = gamecontrol;
         this.graphicField = graphicField;
         this.graphics = graphics;
     }
 
-    @Override
-            public void mouseClicked(MouseEvent e)
+    /**
+     * Paints the playfield accordingly to the gamefield it received
+     *
+     * @param gameField Fieldstatus that will be painted
+     */
+    public void paintPlayfield(Game gameField)
+    {
+        int[][] k = gameField.getField().getField();
+
+        //iterates through all fields and sets the color
+        for (int i = 0; i < k.length; i++)
+        {
+            for (int j = 0; j < k[0].length; j++)
             {
+                //used to story which color the element should have
+                Color tempColor;
 
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e)
-            {
-                GameStone a = (GameStone) e.getComponent();
-                Game gameField = gamecontrol.setStone(a.getRow());
-                int[][] k = gameField.getField().getField();
-
-                for (int i = 0; i < k.length; i++)
+                //New Color-Definitions have to be added here to have any effect
+                switch (k[i][j])
                 {
-                    for (int j = 0; j < k[0].length; j++)
-                    {
-                        if (k[i][j] == 1)
-                        {
-                            graphicField[i][j].setColor(Color.yellow);
-                        } else if (k[i][j] == 2)
-                        {
-                            graphicField[i][j].setColor(Color.red);
+                    case -1:
+                        tempColor = Color.GREEN;
+                        break;
 
-                        }
+                    case 1:
+                        tempColor = Color.YELLOW;
+                        break;
+                    case 2:
+                        tempColor = Color.RED;
+                        break;
 
-                    }
+                    default:
+                        tempColor = Color.WHITE;
                 }
-
-                graphics.repaint();
-
-               
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e)
-            {
+                
+                //The component gets the color from the logical playfield
+                graphicField[i][j].setColor(tempColor);
 
             }
+        }
 
-            @Override
-            public void mouseEntered(MouseEvent e)
-            {
+        graphics.repaint();
+    }
 
-            }
+    @Override
+    public void mousePressed(MouseEvent e)
+    {
+        //Each playstone is a component with a MouseListener added to it,
+        //through that we are able to get which stone was clicked
+        GameStone a = (GameStone) e.getComponent();
+        paintPlayfield(gamecontrol.setStone(a.getRow()));
 
-            @Override
-            public void mouseExited(MouseEvent e)
-            {
+    }
 
-            }
+    // <editor-fold defaultstate="collapsed" desc="Not implemented MouseEvents">
+    @Override
+    public void mouseClicked(MouseEvent e)
+    {
 
-            
-    
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e)
+    {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e)
+    {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e)
+    {
+
+    }
+// </editor-fold>
+
 }

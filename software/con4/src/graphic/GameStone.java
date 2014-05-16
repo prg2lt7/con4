@@ -51,5 +51,7 @@ public class GameStone extends Component
         
        
     }
+
+   
     
 }
