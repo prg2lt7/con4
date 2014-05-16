@@ -13,7 +13,7 @@ import java.util.Random;
 public class LocalOpponent extends Opponent
 {
     private int value;
-    private int difficulty;
+    private int difficulty = 3;
 
     /**
      * 
@@ -21,8 +21,9 @@ public class LocalOpponent extends Opponent
      */
     public LocalOpponent(int value)
     {
+        super();
         this.value = value;
-        this.difficulty = 1;
+        this.difficulty = 3;
     }
 
     /**
@@ -111,18 +112,39 @@ public class LocalOpponent extends Opponent
             
             // look into the future
             case 2:
-                int[] choice = new int[field.getField().length];
+                int[] choice1 = new int[field.getField().length];
                 for (int i = 0; i < field.getField().length; i++)
                 {
                     findBestStone1(field.getField(), true, 20);
                 }
-                int max = choice[0];
+                int max1 = choice1[0];
                 x = 0;
                 for (int i = 0; i < field.getField().length; i++)
                 {
-                    if (choice[i] > max)
+                    System.out.println(choice1[i]);
+                    if (choice1[i] > max1)
                     {
-                        max = choice[i];
+                        max1 = choice1[i];
+                        x = i;
+                    }
+                }
+                break;
+            
+            // Analyze only winners
+            case 3:
+                int[] choice2 = new int[field.getField().length];
+                for (int i = 0; i < field.getField().length; i++)
+                {
+                    findBestStone2(field.getField(), true, 20, 1);
+                }
+                int max2 = choice2[0];
+                x = 0;
+                for (int i = 0; i < field.getField().length; i++)
+                {
+                    if (choice2[i] > max2)
+                    {
+                        System.out.println(choice2[i]);
+                        max2 = choice2[i];
                         x = i;
                     }
                 }
@@ -146,14 +168,50 @@ public class LocalOpponent extends Opponent
         int count = 0;
         Field tempfield = new Field(currentfield.length, currentfield[0].length);
         tempfield.setField(currentfield);
-        analyzeField1(currentfield);
+        count += analyzeField1(currentfield);
         if (iteration > 0 && tempfield.isWinner() == 0)
         {
             for (int x = 0; x < tempfield.getField().length; x++)
             {
                 tempfield.setField(currentfield);
                 tempfield.putStone(x, value);
-                count += findBestStone1(tempfield.getField(), !myStone, iteration - 1)/10;
+                count += findBestStone1(tempfield.getField(), !myStone, iteration - 1)/2;
+            }
+        }
+        return count;
+    }
+
+    private int findBestStone2(int[][] currentfield, boolean myStone, int iteration, int opponentvalue)
+    {
+        int count = 0;
+        Field tempfield = new Field(currentfield.length, currentfield[0].length);
+        tempfield.setField(currentfield);
+        if (tempfield.getWinner() == 0)
+        {
+            count = 0;
+        }
+        if (tempfield.getWinner() == value)
+        {
+            count = 1000000;
+        }
+        if (tempfield.getWinner() != 0 && tempfield.getWinner() != value)
+        {
+            count = -1000000;
+        }
+        if (iteration > 0 && tempfield.isWinner() == 0)
+        {
+            for (int x = 0; x < tempfield.getField().length; x++)
+            {
+                tempfield.setField(currentfield);
+                if (myStone)
+                {
+                    tempfield.putStone(x, value);
+                }
+                else
+                {
+                    tempfield.putStone(x, opponentvalue);
+                }
+                count += findBestStone2(tempfield.getField(), !myStone, iteration - 1, opponentvalue)/2;
             }
         }
         return count;
