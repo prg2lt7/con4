@@ -4,6 +4,8 @@
  */
 package logic;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author daniw
@@ -15,34 +17,34 @@ public class Field
     private static final int DEFAULTHEIGHT = 6;
     private int[][] field;
     private int winner;
+    private ArrayList<ModelListener> listener;
 
-    /**
-     * Constructor for a field. 
-     * This constructor uses the default values for width and height of the 
-     * field. 
-     */
-    public Field()
+    public void addListener(ModelListener listener)
     {
-        field = new int[DEFAULTWIDTH][DEFAULTHEIGHT];
-        for (int i = 0; i < DEFAULTWIDTH; i++)
-        {
-            for (int j = 0; j < DEFAULTHEIGHT; j++)
-            {
-                field[i][j] = 0;
-            }
-        }
-        winner = 0;
+        this.listener.add(listener);
     }
 
     /**
-     * Constructor for a field. 
-     * height and width can be specified. If either of them is lower than 4, 
-     * it is replaced with its default value. 
+     * Constructor for a field. This constructor uses the default values for
+     * width and height of the field.
+     */
+    public Field()
+    {
+        this(DEFAULTWIDTH, DEFAULTHEIGHT);
+
+    }
+
+    /**
+     * Constructor for a field. height and width can be specified. If either of
+     * them is lower than 4, it is replaced with its default value.
+     *
      * @param width width of the field
      * @param height height of the field
      */
     public Field(int width, int height)
     {
+
+        listener = new ArrayList<>();
         if (width < 4)
         {
             width = DEFAULTWIDTH;
@@ -63,7 +65,8 @@ public class Field
     }
 
     /**
-     * Returns the entire field as a two dimensional array. 
+     * Returns the entire field as a two dimensional array.
+     *
      * @return field
      */
     public int[][] getField()
@@ -72,7 +75,8 @@ public class Field
     }
 
     /**
-     * Returns the winner on the actual field. 
+     * Returns the winner on the actual field.
+     *
      * @return winner
      */
     public int getWinner()
@@ -81,7 +85,8 @@ public class Field
     }
 
     /**
-     * Sets the field. 
+     * Sets the field.
+     *
      * @param field Field to be set
      */
     public void setField(int[][] field)
@@ -96,7 +101,8 @@ public class Field
     }
 
     /**
-     * Sets ghe winner. 
+     * Sets ghe winner.
+     *
      * @param winner Winner to set
      */
     public void setWinner(int winner)
@@ -106,11 +112,12 @@ public class Field
 
     /**
      * Put one stone in a column.
+     *
      * @param x column in which the stone has to be placed
      * @param value color of the stone to be inserted, indicates player
-     * @return boolean value that indicates if a stone has been placed
-     *         true if stone is placed in column x
-     *         false if x out of range or if column x was full
+     * @return boolean value that indicates if a stone has been placed true if
+     * stone is placed in column x false if x out of range or if column x was
+     * full
      */
     public boolean putStone(int x, int value)
     {
@@ -124,6 +131,11 @@ public class Field
             if (y < field[x].length)
             {
                 field[x][y] = value;
+                for (ModelListener ChangeListener : listener)
+                {
+                    ChangeListener.modelChanged();
+                }
+
                 return true;
             }
             return false;
@@ -132,21 +144,36 @@ public class Field
     }
 
     /**
-     * Override for the toString method.
-     * Returns the field in the format as follows: 
+     * Is used to reset the playfield
+     */
+    public void resetField()
+    {
+        
+        int width = field.length;
+        int height = field[0].length;
+        
+        field = new int[width][height];
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                field[i][j] = 0;
+            }
+        }
+
+        for (ModelListener ChangeListener : listener)
+        {
+            ChangeListener.modelChanged();
+        }
+    }
+
+    /**
+     * Override for the toString method. Returns the field in the format as
+     * follows: +-+-+-+-+-+-+-+ | | | | | | | | +-+-+-+-+-+-+-+ | | | | | | | |
+     * +-+-+-+-+-+-+-+ | | |X|O| | | | +-+-+-+-+-+-+-+ | |X|O|X|X| | |
+     * +-+-+-+-+-+-+-+ | |O|O|O|X| | | +-+-+-+-+-+-+-+ | |O|X|X|O|X| |
      * +-+-+-+-+-+-+-+
-     * | | | | | | | |
-     * +-+-+-+-+-+-+-+
-     * | | | | | | | |
-     * +-+-+-+-+-+-+-+
-     * | | |X|O| | | |
-     * +-+-+-+-+-+-+-+
-     * | |X|O|X|X| | |
-     * +-+-+-+-+-+-+-+
-     * | |O|O|O|X| | |
-     * +-+-+-+-+-+-+-+
-     * | |O|X|X|O|X| |
-     * +-+-+-+-+-+-+-+
+     *
      * @return String representation of the field
      */
     @Override
@@ -196,9 +223,10 @@ public class Field
     }
 
     /**
-     * Check if someone has won the game. 
-     * If no Player has won the Game, 0 is returned. 
-     * If a Player has won the Game, then the Players number is returned. 
+     * Check if someone has won the game. If no Player has won the Game, 0 is
+     * returned. If a Player has won the Game, then the Players number is
+     * returned.
+     *
      * @return value representing winner of the game
      */
     public int isWinner()
@@ -206,7 +234,7 @@ public class Field
         int[] line = new int[4];
         int x;
         int y;
-        
+
         // check horizontal lines
         x = 0;
         while (x < field.length - 4 && winner == 0)
@@ -226,7 +254,7 @@ public class Field
             }
             x++;
         }
-        
+
         // check vertical lines
         x = 0;
         while (x < field.length && winner == 0)
@@ -246,7 +274,7 @@ public class Field
             }
             x++;
         }
-        
+
         // check diagonal lines from bottom left to top right
         x = 0;
         while (x < field.length - 3 && winner == 0)
@@ -266,8 +294,7 @@ public class Field
             }
             x++;
         }
-        
-        
+
         // check diagonal lines from top left to bottom right
         x = 0;
         while (x < field.length - 3 && winner == 0)
@@ -287,14 +314,14 @@ public class Field
             }
             x++;
         }
-        
+
         return winner;
     }
 
     /**
-     * Check if four elements in one line are equal. 
-     * Only the four elements at the beginning are checked. 
-     * If the line is too short, false is returned. 
+     * Check if four elements in one line are equal. Only the four elements at
+     * the beginning are checked. If the line is too short, false is returned.
+     *
      * @param line line to be checked
      * @return true if all elements are equal
      */

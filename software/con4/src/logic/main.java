@@ -7,7 +7,8 @@ package logic;
 
 
 import graphic.PlayfieldGraphics;
-import network.Network;
+import graphic.View;
+
 
 /**
  *
@@ -20,6 +21,8 @@ public class main
     {
         Controller gameControl = new Controller();
         PlayfieldGraphics game = new PlayfieldGraphics(gameControl);
+        View graphic = new View(gameControl.getGame().getField(), game);
+        
         game.setVisible(true);
 
     }

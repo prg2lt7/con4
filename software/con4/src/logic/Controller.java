@@ -65,6 +65,13 @@ public class Controller
     {
 
     }
+    
+    /**
+     * Resets the playfield
+     */
+    public void resetPlayfield(){
+        game.getField().resetField();
+    }
 
     public boolean saveGame()
     {

@@ -9,7 +9,7 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import logic.Controller;
-import network.Network;
+
 
 /**
  * Class is used to handle the visible playfield for both the game against the computer as also the one over network
@@ -24,6 +24,11 @@ public class PlayfieldGraphics extends JFrame
     //A field of GameStone components, is used to access
     //the generated playstones after dynamic creaton
     GameStone[][] graphicField;
+
+    public GameStone[][] getGraphicField()
+    {
+        return graphicField;
+    }
     
     //More detailed MouseListener for the GameStone-Events
     GameStoneListener stoneListener;
@@ -39,7 +44,7 @@ public class PlayfieldGraphics extends JFrame
         initComponents();
         this.gamecontrol = gameControl;
         graphicField = new GameStone[7][6];
-        stoneListener = new GameStoneListener(gamecontrol, graphicField, this);
+        stoneListener = new GameStoneListener(gamecontrol);
 
         GridLayout grid = new GridLayout(6, 7, 10, 10);
 
@@ -220,16 +225,16 @@ public class PlayfieldGraphics extends JFrame
 
     private void resetPlayfield()
     {
-        gamecontrol = new Controller();
-        stoneListener.setGamecontrol(gamecontrol);
-        stoneListener.paintPlayfield();
+       
+        gamecontrol.resetPlayfield();
+        
 
     }
 
     private void loadPlayfield()
     {
         gamecontrol.loadGame();
-        stoneListener.paintPlayfield();
+        
     }
 
 }
