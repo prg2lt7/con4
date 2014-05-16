@@ -46,6 +46,7 @@ public class Controller
         {
             x++;
         }
+        
         game.getField().putStone(xPosition, game.getState().getUserMove());
         //checks if user wins game with this move
         if (game.getField().isWinner() != 0)

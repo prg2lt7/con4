@@ -7,6 +7,8 @@
 package graphic;
 
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logic.Field;
 import logic.ModelListener;
 
@@ -41,29 +43,30 @@ public class View implements ModelListener
     public void repaintPlayfield()
     {
         int[][] k = field.getField();
-
+        //used to story which color the element should have
+        Color tempColor;
+        
         //iterates through all fields and sets the color
         for (int i = 0; i < k.length; i++)
         {
             for (int j = 0; j < k[0].length; j++)
             {
-                //used to story which color the element should have
-                Color tempColor;
 
                 //New Color-Definitions have to be added here to have any effect
                 switch (k[i][j])
                 {
+                    case -2:
+                        tempColor = Color.red;
+                        break;
                     case -1:
                         tempColor = Color.GREEN;
                         break;
-
                     case 1:
                         tempColor = Color.YELLOW;
                         break;
                     case 2:
-                        tempColor = Color.RED;
+                        tempColor = Color.BLUE;
                         break;
-
                     default:
                         tempColor = Color.WHITE;
                 }
@@ -75,6 +78,7 @@ public class View implements ModelListener
         }
 
         graphics.repaint();
+        
     }
 
     @Override
