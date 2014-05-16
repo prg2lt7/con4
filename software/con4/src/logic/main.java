@@ -5,7 +5,7 @@
  */
 package logic;
 
-import graphic.GUI;
+
 import graphic.PlayfieldGraphics;
 import network.Network;
 

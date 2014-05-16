@@ -23,7 +23,7 @@ public class LocalOpponent extends Opponent
     {
         super();
         this.value = value;
-        this.difficulty = 3;
+        this.difficulty = 1;
     }
 
     /**

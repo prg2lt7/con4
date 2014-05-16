@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import logic.Controller;
-import logic.Game;
 
 /**
  * Is used to handle the events that occour in the GameStone.java class
@@ -22,6 +21,8 @@ public class GameStoneListener implements MouseListener
     Controller gamecontrol;
     GameStone[][] graphicField;
     PlayfieldGraphics graphics;
+    
+    // <editor-fold defaultstate="collapsed" desc="Set-Methods">
 
     public void setGamecontrol(Controller gamecontrol)
     {
@@ -32,7 +33,15 @@ public class GameStoneListener implements MouseListener
     {
         this.graphicField = graphicField;
     }
+    
+    // </editor-fold>
 
+    /**
+     * 
+     * @param gamecontrol
+     * @param graphicField
+     * @param graphics 
+     */
     public GameStoneListener(Controller gamecontrol, GameStone[][] graphicField, PlayfieldGraphics graphics)
     {
         this.gamecontrol = gamecontrol;
@@ -41,13 +50,13 @@ public class GameStoneListener implements MouseListener
     }
 
     /**
-     * Paints the playfield accordingly to the gamefield it received
-     *
-     * @param gameField Fieldstatus that will be painted
+     * Paints the playfield accordingly to the gamefield which 
+     * is stored in the game controller
+     * 
      */
-    public void paintPlayfield(Game gameField)
+    public void paintPlayfield()
     {
-        int[][] k = gameField.getField().getField();
+        int[][] k = gamecontrol.getGame().getField().getField();
 
         //iterates through all fields and sets the color
         for (int i = 0; i < k.length; i++)
@@ -90,7 +99,8 @@ public class GameStoneListener implements MouseListener
         //Each playstone is a component with a MouseListener added to it,
         //through that we are able to get which stone was clicked
         GameStone a = (GameStone) e.getComponent();
-        paintPlayfield(gamecontrol.setStone(a.getRow()));
+        gamecontrol.setStone(a.getRow());
+        paintPlayfield();
 
     }
 

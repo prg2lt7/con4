@@ -9,7 +9,7 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import logic.Controller;
-import logic.Game;
+import network.Network;
 
 /**
  * Class is used to handle the visible playfield for both the game against the computer as also the one over network
@@ -191,6 +191,7 @@ public class PlayfieldGraphics extends JFrame
     {//GEN-HEADEREND:event_jMenuItem6ActionPerformed
         switch(evt.getActionCommand()){
             case "Host Game":
+                
                 break;
             case "Join Game":
                 break;
@@ -221,13 +222,14 @@ public class PlayfieldGraphics extends JFrame
     {
         gamecontrol = new Controller();
         stoneListener.setGamecontrol(gamecontrol);
-        stoneListener.paintPlayfield(new Game());
+        stoneListener.paintPlayfield();
 
     }
 
     private void loadPlayfield()
     {
-        stoneListener.paintPlayfield(gamecontrol.loadGame());
+        gamecontrol.loadGame();
+        stoneListener.paintPlayfield();
     }
 
 }
