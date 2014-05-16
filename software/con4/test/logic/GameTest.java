@@ -40,15 +40,22 @@ public class GameTest
 
     /**
      * Test of getField method, of class Game.
+     * Default field size 7*6 and custom field size
      */
     @Test
     public void testGetField()
     {
-        System.out.println("getField");
+        System.out.println("getField - default size");
         Game instance = new Game();
         int[][] expResult = new int[7][6];
         int[][] result = instance.getField().getField();
-        assertEquals(expResult, result);
+        assertArrayEquals(expResult, result);
+        
+        System.out.println("getField - custom size");
+        instance = new Game(9, 8);
+        expResult = new int[9][8];
+        result = instance.getField().getField();
+        assertArrayEquals(expResult, result);
     }
 
     /**
