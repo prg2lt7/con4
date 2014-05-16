@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import network.Network;
 
 
 /**
@@ -59,7 +60,7 @@ public class Controller
         
     }
     
-    public void networkGame(boolean server)
+    public void networkGame(Network net, boolean server)
     {
         
     }
