@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import logic.Controller;
 
 /**
  * @author Pascal Häfliger <pascal.haefliger.01@stud.hslu.ch>
@@ -19,6 +20,8 @@ public class Network implements Runnable
     
     private DataOutputStream outstream;
     private DataInputStream instream;
+    
+    private Controller control;
 
     // true:  Keep receiving packages
     // false: Stop receiving packages
@@ -33,11 +36,12 @@ public class Network implements Runnable
     private int sendmsg;
     private int recemsg;
                          
-    public Network()
+    public Network(Controller control)
     {
         this.running = true;
         this.sendmsg = def_value;
         this.recemsg = def_value;
+        this.control = control;
     }
     
     
@@ -80,7 +84,7 @@ public class Network implements Runnable
             ServerSocket dummy = new ServerSocket(port);
             myTcpClient = dummy.accept();
             System.out.println("Server: Connected");
-            dummy.close();
+            //dummy.close();
               
             initStream();           
             System.out.println("Server: Stream initialized");
@@ -115,13 +119,26 @@ public class Network implements Runnable
     {
         try
         {
-            //WARNING: The following IO-operation puts this Thread to the blocked life-cycle!
-            recemsg = instream.readByte();
+            int buffer;
+            
+            //WARNING: The IO-operation ".readByte()" puts this Thread to the blocked life-cycle  untill IO input is done!
+            buffer = instream.readByte();
+            
+            if( (buffer>=0) && (buffer<=7) )
+            {
+                // Store only when message within bound
+                recemsg = buffer;
+                control.setReceivedFlag(true);
+            }
+            else
+            {
+                recemsg = no_new_Disk_value;
+            }
         }
 
         catch (IOException ex)
         {
-            System.err.println("Exception in Method getMove " + ex.getMessage());
+            System.err.println("Exception in Method receiveDiskPos " + ex.getMessage());
             recemsg =  err_value;
         }  
     }
@@ -135,17 +152,22 @@ public class Network implements Runnable
     {
         try
         {            
-            outstream.write(sendmsg);
-            outstream.flush();
-            sendmsg = no_new_Disk_value;
+            if( (sendmsg>=0) && (sendmsg<=7))
+            {
+                // Send only when message within bound
+                outstream.write(sendmsg);
+                outstream.flush();
+                sendmsg = no_new_Disk_value;
+            }
         }
         
         catch(IOException ex)
         {
-            System.err.println("Error in Method setMove: " + ex.getMessage());
+            System.err.println("Error in Method sendDiskPos: " + ex.getMessage());
             sendmsg = err_value;
         }            
     }
+    
     
     /**
      * 
@@ -156,13 +178,17 @@ public class Network implements Runnable
         this.sendmsg = sendMsg;     
     }
     
+    
     /**
      * 
      * @return The message that you received over the network.
      */
     public int receMsg()
     {
-        return recemsg;
+        int buffer2 = recemsg;
+        recemsg = no_new_Disk_value;
+        control.setReceivedFlag(false);
+        return buffer2;
     }
 
     
@@ -181,7 +207,7 @@ public class Network implements Runnable
      *          true: connection successfully closed
      *          false: failed to close the connection correctly
      */
-    private boolean close()
+    private boolean closeConnection()
     {
         try
         {
@@ -202,17 +228,9 @@ public class Network implements Runnable
     {
         while (running)
         {
-            if(sendmsg >= 0 && sendmsg >= 7)
-            {
-                sendDiskPos();
-            }
-            if(recemsg >= 8 || recemsg < 0)
-            {
-                receiveDiskPos();
-            }            
+            sendDiskPos();
+            receiveDiskPos();          
         }
-        
-        //Close the socket
-        close();
+        closeConnection();
     }
 }

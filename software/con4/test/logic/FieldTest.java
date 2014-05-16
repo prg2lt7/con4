@@ -60,7 +60,7 @@ public class FieldTest extends Exception
             }
         }
         int[][] result = instance.getField();
-        assertEquals(expResult, result);
+        assertArrayEquals(expResult, result);
         
         expResult[3][0] = 1;
         assertEquals(true, instance.putStone(3, 1));
@@ -87,7 +87,7 @@ public class FieldTest extends Exception
         }
         expResult[3][0] = 1;
         assertEquals(true, instance.putStone(3, 1));
-        assertEquals(expResult, instance.getField());
+        assertArrayEquals(expResult, instance.getField());
     }
 
     /**

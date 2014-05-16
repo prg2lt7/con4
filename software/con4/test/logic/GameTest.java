@@ -66,9 +66,13 @@ public class GameTest
     {
         System.out.println("getState");
         Game instance = new Game();
-        State expResult = new State();
-        State result = instance.getState();
+        int expResult = 1;
+        int result = instance.getState().getUserMove();
         assertEquals(expResult, result);
+        
+        boolean expResult1 = false;
+        boolean result1 = instance.getState().isGameOver();
+        assertEquals(expResult1, result1);       
     }
     
 }
