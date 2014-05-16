@@ -59,6 +59,11 @@ public class Controller
         
     }
     
+    public void networkGame(boolean server)
+    {
+        
+    }
+    
     public boolean saveGame()
     {
         String fileName = "saveGame.dat";
