@@ -13,17 +13,17 @@ import java.util.Random;
 public class LocalOpponent extends Opponent
 {
     private int value;
-    private int difficulty = 3;
+    private int difficulty;
 
     /**
      * 
-     * @param value 
+     * @param value
      */
     public LocalOpponent(int value)
     {
         super();
         this.value = value;
-        this.difficulty = 3;
+        this.difficulty = 2;
     }
 
     /**
@@ -112,22 +112,27 @@ public class LocalOpponent extends Opponent
             
             // look into the future
             case 2:
+                Field tempfield = new Field(field.getField().length, field.getField()[0].length);
+                //tempfield.setField(field.getField());
                 int[] choice1 = new int[field.getField().length];
                 for (int i = 0; i < field.getField().length; i++)
                 {
-                    findBestStone1(field.getField(), true, 20);
+                    tempfield.setField(field.getField());
+                    tempfield.putStone(i, value);
+                    choice1[i] = findBestStone1(tempfield.getField(), false, 6);
                 }
                 int max1 = choice1[0];
                 x = 0;
                 for (int i = 0; i < field.getField().length; i++)
                 {
-                    System.out.println(choice1[i]);
+                    System.out.print(choice1[i] + " ");
                     if (choice1[i] > max1)
                     {
                         max1 = choice1[i];
                         x = i;
                     }
                 }
+                System.out.println("");
                 break;
             
             // Analyze only winners
@@ -135,7 +140,7 @@ public class LocalOpponent extends Opponent
                 int[] choice2 = new int[field.getField().length];
                 for (int i = 0; i < field.getField().length; i++)
                 {
-                    findBestStone2(field.getField(), true, 20, 1);
+                    findBestStone2(field.getField(), true, 2, 1);
                 }
                 int max2 = choice2[0];
                 x = 0;
@@ -175,7 +180,7 @@ public class LocalOpponent extends Opponent
             {
                 tempfield.setField(currentfield);
                 tempfield.putStone(x, value);
-                count += findBestStone1(tempfield.getField(), !myStone, iteration - 1)/2;
+                count += findBestStone1(tempfield.getField(), !myStone, iteration - 1)/10;
             }
         }
         return count;
@@ -211,7 +216,7 @@ public class LocalOpponent extends Opponent
                 {
                     tempfield.putStone(x, opponentvalue);
                 }
-                count += findBestStone2(tempfield.getField(), !myStone, iteration - 1, opponentvalue)/2;
+                count += findBestStone2(tempfield.getField(), !myStone, iteration - 1, opponentvalue)/10;
             }
         }
         return count;
@@ -307,55 +312,55 @@ public class LocalOpponent extends Opponent
         // Four of my own in one row
         if (line[0] == value && line[1] == value && line[2] == value && line[3] == value)
         {
-            return 100000;
+            return 50000;
         }
         
         // Four of my opponent's in one row
         if (line[0] == line[1] && line[0] == line[2] && line[0] == line[3])
         {
-            return -100000;
+            return -200000;
         }
         
         // Three of my own in a line with one open gap
         if ((line[0] == value && line[2] == value && line[3] == value && line[1] == 0) ||
             (line[0] == value && line[1] == value && line[3] == value && line[2] == 0))
         {
-            return 0;
+            return 10000;
         }
         
         // Three of my opponent's in a line with one open gap
         if ((line[0] == line[2] && line[0] == line[3] && line[1] == 0) ||
             (line[0] == line[1] && line[0] == line[3] && line[2] == 0))
         {
-            return -0;
+            return -10000;
         }
         
         // Three of my own in a row, open end
         if ((line[0] == value && line[1] == value && line[2] == value && line[3] == 0) ||
             (line[0] == 0 && line[1] == value && line[2] == value && line[3] == value))
         {
-            return 0;
+            return 5000;
         }
         
         // Three of my opponent's in a row, open end
         if ((line[0] == line[1] && line[0] == line[2] && line[3] == 0) || 
             (line[0] == 0 && line[1] == line[2] && line[1] == line[3]))
         {
-            return -0;
+            return -5000;
         }
         
         // Three of my own in a row, terminated
         if ((line[0] == value && line[1] == value && line[2] == value && line[3] != value) ||
             (line[0] != value && line[1] == value && line[2] == value && line[3] == value))
         {
-            return 0;
+            return -3000;
         }
         
         // Three of my opponent's in a row, terminated
         if ((line[0] == line[1] && line[0] == line[2] && line[3] != line[0]) || 
             (line[0] != line[1] && line[1] == line[2] && line[1] == line[3]))
         {
-            return -0;
+            return 3000;
         }
         
         return 0;
