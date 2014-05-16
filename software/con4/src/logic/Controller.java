@@ -1,6 +1,5 @@
 package logic;
 
-import graphic.*;
 import java.io.*;
 import network.Network;
 
@@ -14,6 +13,7 @@ public class Controller
 
     private static Game game;
     private static Opponent opponent;
+    private boolean flag;
 
     /**
      * default constructor creates new Game
@@ -77,7 +77,7 @@ public class Controller
     {
 
     }
-    
+       
     /**
      * Resets the playfield
      */
@@ -85,10 +85,9 @@ public class Controller
         game.getField().resetField();
     }
     
-    public int setReceivedFlag()
+    public void setReceivedFlag(boolean flag)
     {
-        int column = 3;
-        return column;
+        this.flag = flag;
     }
 
     public boolean saveGame()
