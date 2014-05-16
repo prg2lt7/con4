@@ -128,7 +128,11 @@ public class Network implements Runnable
             {
                 // Store only when message within bound
                 recemsg = buffer;
-                //control.setReceivedFlag(true);
+                control.setReceivedFlag(true);
+            }
+            else
+            {
+                recemsg = no_new_Disk_value;
             }
         }
 
@@ -183,7 +187,7 @@ public class Network implements Runnable
     {
         int buffer2 = recemsg;
         recemsg = no_new_Disk_value;
-        //control.setReceivedFlag(false);
+        control.setReceivedFlag(false);
         return buffer2;
     }
 
