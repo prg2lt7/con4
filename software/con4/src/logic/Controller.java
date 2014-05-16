@@ -1,11 +1,12 @@
 package logic;
 
+import graphic.*;
 import java.io.*;
 import network.Network;
 
 /**
  * class Controller controlls the game play.
- * 
+ *
  * @author Fabian
  */
 public class Controller
@@ -26,14 +27,17 @@ public class Controller
 
     /**
      * Player or opponent intends to set a stone at position x,y Method checks
-     * for possibilty to set stone at requested position returns if stone could
-     * be set to position (true) or not (false)
+     * for possibilty to set stone at requested position
      *
      * @param xPosition
-     * @return
      */
-    public Game setStone(int xPosition)
+    public void setStone(int xPosition)
     {
+        //Is game already over (opponent won)
+        if (game.getState().isGameOver() == true)
+        {
+            
+        }
         //is field full?
         //checks if there is any free position (0) in a column
         int x = 0;
@@ -43,19 +47,27 @@ public class Controller
             x++;
         }
         game.getField().putStone(xPosition, game.getState().getUserMove());
-
+        //checks if user wins game with this move
+        if (game.getField().isWinner() != 0)
+        {
+            game.getState().setGameOver(true);
+        }
         //if field not full (at least one free position (0) - continue gameplay!
         if (game.getField().getField()[x][game.getField().getField()[x].length - 1] == 0)
         {
             game.getField().putStone(opponent.move(game.getField()), opponent.getValue());
-        } else //game over (draw)
+            //checks if opponent won game with this move
+            if (game.getField().isWinner() != 0)
+            {
+                game.getState().setGameOver(true);
+            }
+        } 
+        else //game over (draw)
         {
             game.getState().setGameOver(true);
         }
-        return game;
-
     }
-    
+
     public Game getGame()
     {
         return game;
@@ -64,6 +76,12 @@ public class Controller
     public void networkGame(Network net, boolean server)
     {
 
+    }
+    
+    public int setReceivedFlag()
+    {
+        int column = 3;
+        return column;
     }
 
     public boolean saveGame()
@@ -107,35 +125,14 @@ public class Controller
 
             //Restoring game from file. Cast object to Game.
             game = (Game) save.readObject();
-            
+
             //Close the file.
             save.close();
-        }
-        catch (Exception ex)
+        } catch (Exception ex)
         {
             ex.printStackTrace(); // If there was an error, print the info.
         }
         return game;
 
-    }
-
-    public static void main(String[] args)
-    {
-        Controller c = new Controller();
-        Game g;
-        g = c.setStone(3);
-        System.out.println(g.getField());
-        g = c.setStone(5);
-        System.out.println(g.getField());
-        g = c.setStone(4);
-        System.out.println(g.getField());
-        g = c.setStone(2);
-        System.out.println(g.getField());
-        g = c.setStone(1);
-        System.out.println(g.getField());
-        g = c.setStone(0);
-        System.out.println(g.getField());
-        g = c.setStone(6);
-        System.out.println(g.getField());
     }
 }
