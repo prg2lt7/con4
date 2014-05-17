@@ -10,12 +10,31 @@ package logic;
  */
 public abstract class Opponent
 {
-
-    public Opponent()
+    private int value;
+    
+    public Opponent(int value)
     {
+        this.value = value;
     }
     
+    /**
+     * Get the value of the opponent.
+     * @return value
+     */
+    public int getValue()
+    {
+        return value;
+    }
+
+    /**
+     * Set the value of the opponent.
+     * @param value 
+     */
+    public void setValue(int value)
+    {
+        this.value = value;
+    }
+
     public abstract int move(Field field);
-    public abstract int getValue();
     
 }

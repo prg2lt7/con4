@@ -98,10 +98,11 @@ public class Field
                 this.field[x][y] = field[x][y];
             }
         }
+        winner = isWinner();
     }
 
     /**
-     * Sets ghe winner.
+     * Sets the winner.
      *
      * @param winner Winner to set
      */
@@ -131,11 +132,12 @@ public class Field
             if (y < field[x].length)
             {
                 field[x][y] = value;
+                winner = isWinner();
+                
                 for (ModelListener ChangeListener : listener)
                 {
                     ChangeListener.modelChanged();
                 }
-
                 return true;
             }
             return false;
@@ -160,7 +162,8 @@ public class Field
                 field[i][j] = 0;
             }
         }
-
+        winner = isWinner();
+        
         for (ModelListener ChangeListener : listener)
         {
             ChangeListener.modelChanged();
@@ -169,9 +172,19 @@ public class Field
 
     /**
      * Override for the toString method. Returns the field in the format as
-     * follows: +-+-+-+-+-+-+-+ | | | | | | | | +-+-+-+-+-+-+-+ | | | | | | | |
-     * +-+-+-+-+-+-+-+ | | |X|O| | | | +-+-+-+-+-+-+-+ | |X|O|X|X| | |
-     * +-+-+-+-+-+-+-+ | |O|O|O|X| | | +-+-+-+-+-+-+-+ | |O|X|X|O|X| |
+     * follows: 
+     * +-+-+-+-+-+-+-+
+     * | | | | | | | |
+     * +-+-+-+-+-+-+-+
+     * | | | | | | | |
+     * +-+-+-+-+-+-+-+
+     * | | |X|O| | | |
+     * +-+-+-+-+-+-+-+
+     * | |X|O|X|X| | |
+     * +-+-+-+-+-+-+-+
+     * | |O|O|O|X| | |
+     * +-+-+-+-+-+-+-+
+     * | |O|X|X|O|X| |
      * +-+-+-+-+-+-+-+
      *
      * @return String representation of the field
@@ -227,7 +240,7 @@ public class Field
      * returned. If a Player has won the Game, then the Players number is
      * returned.
      *
-     * @return value representing winner of the game
+     * @return value representing winner of the game, 0 if no winner
      */
     public int isWinner()
     {

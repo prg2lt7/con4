@@ -15,6 +15,7 @@ public class NetworkOpponent extends Opponent
     
     public NetworkOpponent(Network network)
     {
+        super(2);           // Has to be part of parameter later
         this.network = network;
         
     }
