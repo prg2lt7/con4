@@ -163,6 +163,13 @@ public class LocalOpponent extends Opponent
         return x;
     }
     
+    /**
+     * Recursive function  to find the best stone, approach 1.
+     * @param currentfield Field in which the stone should be set
+     * @param myStone declared if the opponent plays the next stone
+     * @param iteration counter do define how deep the recursion should be done
+     * @return chosen stone position
+     */
     private int findBestStone1(int[][] currentfield, boolean myStone, int iteration)
     {
         int count = 0;
@@ -181,8 +188,17 @@ public class LocalOpponent extends Opponent
         }
         return count;
     }
-
-    private int findBestStone2(int[][] currentfield, boolean myStone, int iteration, int opponentvalue)
+    
+    /**
+     * Recursive function  to find the best stone, approach 1.
+     * @param currentfield Field in which the stone should be set
+     * @param myStone declared if the opponent plays the next stone
+     * @param iteration counter do define how deep the recursion should be done
+     * @return chosen stone position
+     * @param playervalue value of the player
+     * @return 
+     */
+    private int findBestStone2(int[][] currentfield, boolean myStone, int iteration, int playervalue)
     {
         int count = 0;
         Field tempfield = new Field(currentfield.length, currentfield[0].length);
@@ -210,14 +226,21 @@ public class LocalOpponent extends Opponent
                 }
                 else
                 {
-                    tempfield.putStone(x, opponentvalue);
+                    tempfield.putStone(x, playervalue);
                 }
-                count += findBestStone2(tempfield.getField(), !myStone, iteration - 1, opponentvalue)/10;
+                count += findBestStone2(tempfield.getField(), !myStone, iteration - 1, playervalue)/10;
             }
         }
         return count;
     }
     
+    /**
+     * Function to analyze a field. 
+     * All combinations of four stoned are analyzed. 
+     * For each combination a value is calculated and then summarized. 
+     * @param field field to analyze
+     * @return value for actual field
+     */
     private int analyzeField1(int[][] field)
     {
         int[] line = new int[4];
@@ -297,6 +320,13 @@ public class LocalOpponent extends Opponent
         return count;
     }
     
+    /**
+     * Function to analyze a line containing four elements. 
+     * Some compositions of stones are valued. 
+     * This value defines, how positive this composition for the opponent. 
+     * @param line line to analyze
+     * @return value that represents how positive this composition is for the opponent
+     */
     private int analyzeLine(int[] line)
     {
         // line empty
