@@ -28,7 +28,6 @@ public class Controller
     /**
      * Player or opponent intends to set a stone at position x,y Method checks
      * for possibilty to set stone at requested position
-     *
      * @param xPosition
      */
     public void setStone(int xPosition)
@@ -86,11 +85,19 @@ public class Controller
         game.getField().resetField();
     }
     
+    /**
+     * network opponent sets flag if opponent made his move
+     * @param flag 
+     */
     public void setReceivedFlag(boolean flag)
     {
         this.flag = flag;
     }
-
+    
+    /**
+     * saves current game to file
+     * @return 
+     */
     public boolean saveGame()
     {
         String fileName = "saveGame.dat";
@@ -119,6 +126,10 @@ public class Controller
         return false;
     }
 
+    /**
+     * loads last saved game
+     * @return 
+     */
     public Game loadGame()
     {
         String fileName = "saveGame.dat";
