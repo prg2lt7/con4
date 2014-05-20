@@ -209,6 +209,12 @@ public class Field
             {
                 switch (field[x][y])
                 {
+                    case -2:
+                        s += "@|";
+                        break;
+                    case -1:
+                        s += "*|";
+                        break;
                     case 0:
                         s += " |";
                         break;
@@ -262,6 +268,10 @@ public class Field
                 if (winLine(line))
                 {
                     winner = field[x][y];
+                    field[x][y]     = -field[x][y];
+                    field[x + 1][y] = -field[x + 1][y];
+                    field[x + 2][y] = -field[x + 2][y];
+                    field[x + 3][y] = -field[x + 3][y];
                 }
                 y++;
             }
@@ -282,6 +292,10 @@ public class Field
                 if (winLine(line))
                 {
                     winner = field[x][y];
+                    field[x][y]     = -field[x][y];
+                    field[x][y + 1] = -field[x][y + 1];
+                    field[x][y + 2] = -field[x][y + 2];
+                    field[x][y + 3] = -field[x][y + 3];
                 }
                 y++;
             }
@@ -302,6 +316,10 @@ public class Field
                 if (winLine(line))
                 {
                     winner = field[x][y];
+                    field[x][y]         = -field[x][y];
+                    field[x + 1][y + 1] = -field[x + 1][y + 1];
+                    field[x + 2][y + 2] = -field[x + 2][y + 2];
+                    field[x + 3][y + 3] = -field[x + 3][y + 3];
                 }
                 y++;
             }
@@ -322,6 +340,10 @@ public class Field
                 if (winLine(line))
                 {
                     winner = field[x][y];
+                    field[x][y]         = -field[x][y];
+                    field[x + 1][y - 1] = -field[x + 1][y - 1];
+                    field[x + 2][y - 2] = -field[x + 2][y - 2];
+                    field[x + 3][y - 3] = -field[x + 3][y - 3];
                 }
                 y++;
             }

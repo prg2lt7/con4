@@ -113,7 +113,7 @@ public class FieldTest extends Exception
         instance.putStone(4, 1);
         instance.putStone(3, 2);
         instance.putStone(2, 1);
-        String expResult = "+-+-+-+-+-+-+-+\n| | | | | | | |\n+-+-+-+-+-+-+-+\n| | | | | | | |\n+-+-+-+-+-+-+-+\n| | |X|O| | | |\n+-+-+-+-+-+-+-+\n| |X|O|X|X| | |\n+-+-+-+-+-+-+-+\n| |O|O|O|X| | |\n+-+-+-+-+-+-+-+\n| |O|X|X|O|X| |\n+-+-+-+-+-+-+-+\n";
+        String expResult = "+-+-+-+-+-+-+-+\n| | | | | | | |\n+-+-+-+-+-+-+-+\n| | | | | | | |\n+-+-+-+-+-+-+-+\n| | |*|O| | | |\n+-+-+-+-+-+-+-+\n| |X|O|*|X| | |\n+-+-+-+-+-+-+-+\n| |O|O|O|*| | |\n+-+-+-+-+-+-+-+\n| |O|X|X|O|*| |\n+-+-+-+-+-+-+-+\n";
         String result = instance.toString();
         assertEquals(expResult, result);
     }

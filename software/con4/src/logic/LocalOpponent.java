@@ -13,6 +13,7 @@ import java.util.Random;
 public class LocalOpponent extends Opponent
 {
     private int difficulty;
+    private static final boolean DEBUG = true;
 
     /**
      * Constructor to create a local opponent. 
@@ -80,6 +81,12 @@ public class LocalOpponent extends Opponent
             return -1;
         }
         
+        // check if someone has won the game
+        if (field.isWinner() != 0)
+        {
+            return -1;
+        }
+        
         // decide, which stone to set next
         switch (difficulty)
         {
@@ -116,14 +123,20 @@ public class LocalOpponent extends Opponent
                 x = 0;
                 for (int i = 0; i < field.getField().length; i++)
                 {
-                    System.out.print(choice1[i] + " ");
+                    if (DEBUG)
+                    {
+                        System.out.print(choice1[i] + " ");
+                    }
                     if (choice1[i] > max1)
                     {
                         max1 = choice1[i];
                         x = i;
                     }
                 }
-                System.out.println("");
+                if (DEBUG)
+                {
+                    System.out.println("");
+                }
                 break;
             
             // Analyze only winners
@@ -140,14 +153,23 @@ public class LocalOpponent extends Opponent
                 x = 0;
                 for (int i = 0; i < field.getField().length; i++)
                 {
-                    System.out.print(choice2[i] + " ");
+                    if (DEBUG)
+                    {
+                        System.out.print(choice2[i] + " ");
+                    }
                     if (choice2[i] > max2)
                     {
-                        max2 = choice2[i];
-                        x = i;
+                        if (field.getField()[x][field.getField()[x].length - 1] == 0)
+                        {
+                            max2 = choice2[i];
+                            x = i;
+                        }
                     }
                 }
-                System.out.println("");
+                if (DEBUG)
+                {
+                    System.out.println("");
+                }
                 break;
             
             // fill from left
@@ -233,10 +255,13 @@ public class LocalOpponent extends Opponent
         }
         else
         {
-            if (tempfield.isWinner() != 0 && iteration > 4)
+            if (DEBUG)
             {
-                System.out.println(iteration + " " + tempfield.isWinner());
-                System.out.println(tempfield);
+                if (tempfield.isWinner() != 0 && iteration > 4)
+                {
+                    System.out.println(iteration + " " + tempfield.isWinner());
+                    System.out.println(tempfield);
+                }
             }
         }
         return count;
@@ -306,7 +331,6 @@ public class LocalOpponent extends Opponent
             }
             x++;
         }
-        
         
         // check diagonal lines from top left to bottom right
         x = 0;
