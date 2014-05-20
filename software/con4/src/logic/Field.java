@@ -250,7 +250,7 @@ public class Field
 
         // check horizontal lines
         x = 0;
-        while (x < field.length - 4 && winner == 0)
+        while (x < field.length - 3 && winner == 0)
         {
             y = 0;
             while (y < field[x].length && winner == 0)
@@ -273,7 +273,7 @@ public class Field
         while (x < field.length && winner == 0)
         {
             y = 0;
-            while (y < field[x].length - 4 && winner == 0)
+            while (y < field[x].length - 3 && winner == 0)
             {
                 line[0] = field[x][y];
                 line[1] = field[x][y + 1];
@@ -293,7 +293,7 @@ public class Field
         while (x < field.length - 3 && winner == 0)
         {
             y = 0;
-            while (y < field[x].length - 4 && winner == 0)
+            while (y < field[x].length - 3 && winner == 0)
             {
                 line[0] = field[x][y];
                 line[1] = field[x + 1][y + 1];

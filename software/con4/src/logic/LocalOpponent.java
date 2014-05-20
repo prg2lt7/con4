@@ -203,21 +203,21 @@ public class LocalOpponent extends Opponent
         int count = 0;
         Field tempfield = new Field(currentfield.length, currentfield[0].length);
         tempfield.setField(currentfield);
-        if (tempfield.getWinner() == 0)
+        if (tempfield.isWinner() == 0)
         {
             count = 0;
         }
         if (tempfield.isWinner() == super.getValue())
         {
-            count = 1000000;
+            count = 2;
         }
         if (tempfield.isWinner() != 0 && tempfield.isWinner() != super.getValue())
         {
-            count = -10000000;
+            count = -256;
         }
         if (iteration > 0 && tempfield.isWinner() == 0)
         {
-            for (int x = 0; x <= tempfield.getField().length; x++)
+            for (int x = 0; x < tempfield.getField().length; x++)
             {
                 tempfield.setField(currentfield);
                 if (myStone)
@@ -228,7 +228,15 @@ public class LocalOpponent extends Opponent
                 {
                     tempfield.putStone(x, playervalue);
                 }
-                count += findBestStone2(tempfield.getField(), !myStone, iteration - 1, playervalue)/10;
+                count += findBestStone2(tempfield.getField(), !myStone, iteration - 1, playervalue)/2;
+            }
+        }
+        else
+        {
+            if (tempfield.isWinner() != 0 && iteration > 4)
+            {
+                System.out.println(iteration + " " + tempfield.isWinner());
+                System.out.println(tempfield);
             }
         }
         return count;
@@ -250,7 +258,7 @@ public class LocalOpponent extends Opponent
         
         // check horizontal lines
         x = 0;
-        while (x < field.length - 4)
+        while (x < field.length - 3)
         {
             y = 0;
             while (y < field[x].length)
@@ -270,7 +278,7 @@ public class LocalOpponent extends Opponent
         while (x < field.length)
         {
             y = 0;
-            while (y < field[x].length - 4)
+            while (y < field[x].length - 3)
             {
                 line[0] = field[x][y];
                 line[1] = field[x][y + 1];
@@ -287,7 +295,7 @@ public class LocalOpponent extends Opponent
         while (x < field.length - 3)
         {
             y = 0;
-            while (y < field[x].length - 4)
+            while (y < field[x].length - 3)
             {
                 line[0] = field[x][y];
                 line[1] = field[x + 1][y + 1];
