@@ -13,7 +13,7 @@ import java.util.Random;
 public class LocalOpponent extends Opponent
 {
     private int difficulty;
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     /**
      * Constructor to create a local opponent. 
