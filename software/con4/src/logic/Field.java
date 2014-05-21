@@ -162,7 +162,7 @@ public class Field
                 field[i][j] = 0;
             }
         }
-        winner = isWinner();
+        winner = 0;
         
         for (ModelListener ChangeListener : listener)
         {
@@ -350,7 +350,7 @@ public class Field
             x++;
         }
 
-        return winner;
+        return (winner >= 0 ? winner : -winner);
     }
 
     /**

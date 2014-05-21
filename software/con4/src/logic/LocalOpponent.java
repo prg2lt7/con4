@@ -231,11 +231,11 @@ public class LocalOpponent extends Opponent
         }
         if (tempfield.isWinner() == super.getValue())
         {
-            count = 2;
+            count = 16;
         }
         if (tempfield.isWinner() != 0 && tempfield.isWinner() != super.getValue())
         {
-            count = -256;
+            count = -1024;
         }
         if (iteration > 0 && tempfield.isWinner() == 0)
         {
