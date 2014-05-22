@@ -54,6 +54,7 @@ public class ControllerTest
         System.out.println("setStone");
         int xPosition = 4;
         Controller instance = new Controller();
+        instance.setOpponentDifficulty(1);
         instance.setStone(xPosition);
         int expResult = 1;  //User set stone
         int result = instance.getGame().getField().getField()[4][0];
