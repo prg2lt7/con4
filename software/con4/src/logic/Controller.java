@@ -28,43 +28,46 @@ public class Controller
     /**
      * Player or opponent intends to set a stone at position x,y Method checks
      * for possibilty to set stone at requested position
+     *
      * @param xPosition
      */
     public void setStone(int xPosition)
     {
-        //Is game already over (opponent won)
-        if (game.getState().isGameOver() == true)
+        if (game.getField().isWinner() == 0)
         {
-            
-        }
+            //Is game already over (opponent won)
+            if (game.getState().isGameOver() == true)
+            {
+
+            }
         //is field full?
-        //checks if there is any free position (0) in a column
-        int x = 0;
-        while ((game.getField().getField()[x][game.getField().getField()[x].length - 1] != 0)
-                && (x < game.getField().getField().length))
-        {
-            x++;
-        }
-        
-        game.getField().putStone(xPosition, game.getState().getUserMove());
-        //checks if user wins game with this move
-        if (game.getField().isWinner() != 0)
-        {
-            game.getState().setGameOver(true);
-        }
-        //if field not full (at least one free position (0) - continue gameplay!
-        if (game.getField().getField()[x][game.getField().getField()[x].length - 1] == 0)
-        {
-            game.getField().putStone(opponent.move(game.getField()), opponent.getValue());
-            //checks if opponent won game with this move
+            //checks if there is any free position (0) in a column
+            int x = 0;
+            while ((game.getField().getField()[x][game.getField().getField()[x].length - 1] != 0)
+                    && (x < game.getField().getField().length))
+            {
+                x++;
+            }
+
+            game.getField().putStone(xPosition, game.getState().getUserMove());
+            //checks if user wins game with this move
             if (game.getField().isWinner() != 0)
             {
                 game.getState().setGameOver(true);
             }
-        } 
-        else //game over (draw)
-        {
-            game.getState().setGameOver(true);
+            //if field not full (at least one free position (0) - continue gameplay!
+            if (game.getField().getField()[x][game.getField().getField()[x].length - 1] == 0)
+            {
+                game.getField().putStone(opponent.move(game.getField()), opponent.getValue());
+                //checks if opponent won game with this move
+                if (game.getField().isWinner() != 0)
+                {
+                    game.getState().setGameOver(true);
+                }
+            } else //game over (draw)
+            {
+                game.getState().setGameOver(true);
+            }
         }
     }
 
@@ -72,31 +75,34 @@ public class Controller
     {
         return game;
     }
-    
+
     public void networkGame(Network net, boolean server)
     {
 
     }
-       
+
     /**
      * Resets the playfield
      */
-    public void resetPlayfield(){
+    public void resetPlayfield()
+    {
         game.getField().resetField();
     }
-    
+
     /**
      * network opponent sets flag if opponent made his move
-     * @param flag 
+     *
+     * @param flag
      */
     public void setReceivedFlag(boolean flag)
     {
         this.flag = flag;
     }
-    
+
     /**
      * saves current game to file
-     * @return 
+     *
+     * @return
      */
     public boolean saveGame()
     {
@@ -128,7 +134,8 @@ public class Controller
 
     /**
      * loads last saved game
-     * @return 
+     *
+     * @return
      */
     public Game loadGame()
     {
