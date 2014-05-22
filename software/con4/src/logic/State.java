@@ -1,7 +1,7 @@
 package logic;
 
 /**
- *
+ * contains all status informations about current game
  * @author Fabian
  */
 public class State
@@ -21,8 +21,7 @@ public class State
     }
 
     /**
-     * changes the move
-     *
+     * changes the player that has the move
      * @return
      */
     public boolean toggleState()
@@ -31,6 +30,10 @@ public class State
         return userMove;
     }
 
+    /**
+     * returns information about who has the move
+     * @return 
+     */
     public int getUserMove()
     {
         if (userMove == true)
@@ -40,11 +43,20 @@ public class State
         return 2;
     }
 
+    /**
+     * returns information about game state
+     * if game is over -> true
+     * @return 
+     */
     public boolean isGameOver()
     {
         return gameOver;
     }
 
+    /**
+     * modifies game over attribut
+     * @param gO 
+     */
     public void setGameOver(boolean gO)
     {
         gameOver = gO;
