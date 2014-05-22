@@ -20,6 +20,8 @@ hs_err_pid*
 *.pdf
 *.toc
 
+# Saved Games
+*.dat
 
 /software/con4/dist/
 /software/con4/build/
