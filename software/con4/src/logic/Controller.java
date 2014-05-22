@@ -157,6 +157,5 @@ public class Controller
             ex.printStackTrace(); // If there was an error, print the info.
         }
         return game;
-
     }
 }

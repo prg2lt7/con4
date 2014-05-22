@@ -18,7 +18,7 @@ public class Field implements Serializable
     private static final int DEFAULTHEIGHT = 6;
     private int[][] field;
     private int winner;
-    private ArrayList<ModelListener> listener;
+    private transient ArrayList<ModelListener> listener;
 
     public void addListener(ModelListener listener)
     {
