@@ -141,6 +141,7 @@ public class LocalOpponent extends Opponent
             
             // Analyze only winners
             case 3:
+                long mytime = System.currentTimeMillis();
                 Field tempfield2 = new Field(field.getField().length, field.getField()[0].length);
                 int[] choice2 = new int[field.getField().length];
                 for (int i = 0; i < field.getField().length; i++)
@@ -169,6 +170,7 @@ public class LocalOpponent extends Opponent
                 if (DEBUG)
                 {
                     System.out.println("  " + x);
+                    System.out.println(System.currentTimeMillis() - mytime);
                 }
                 break;
             
@@ -181,7 +183,6 @@ public class LocalOpponent extends Opponent
                 }
                 break;
         }
-        
         return x;
     }
     
