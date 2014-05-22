@@ -131,17 +131,16 @@ public class ControllerTest
 
     /**
      * Test of saveGame method, of class Controller.
+     * saves game to file.
      */
     @Test
     public void testSaveGame()
     {
         System.out.println("saveGame");
         Controller instance = new Controller();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.saveGame();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

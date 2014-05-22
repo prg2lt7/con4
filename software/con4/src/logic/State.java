@@ -1,10 +1,12 @@
 package logic;
 
+import java.io.Serializable;
+
 /**
  * contains all status informations about current game
  * @author Fabian
  */
-public class State
+public class State implements Serializable
 {
 
     private boolean userMove;

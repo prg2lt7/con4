@@ -4,13 +4,14 @@
  */
 package logic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author daniw
  */
-public class Field
+public class Field implements Serializable
 {
 
     private static final int DEFAULTWIDTH = 7;
