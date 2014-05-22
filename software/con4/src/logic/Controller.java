@@ -4,8 +4,7 @@ import java.io.*;
 import network.Network;
 
 /**
- * class Controller controlls the game play.
- *
+ * class Controller controls the game play
  * @author Fabian
  */
 public class Controller
@@ -28,7 +27,6 @@ public class Controller
     /**
      * Player or opponent intends to set a stone at position x,y Method checks
      * for possibilty to set stone at requested position
-     *
      * @param xPosition
      */
     public void setStone(int xPosition)
@@ -71,6 +69,10 @@ public class Controller
         }
     }
 
+    /**
+     * returns current game
+     * @return 
+     */
     public Game getGame()
     {
         return game;
@@ -91,7 +93,6 @@ public class Controller
 
     /**
      * network opponent sets flag if opponent made his move
-     *
      * @param flag
      */
     public void setReceivedFlag(boolean flag)
@@ -101,7 +102,6 @@ public class Controller
 
     /**
      * saves current game to file
-     *
      * @return
      */
     public boolean saveGame()
@@ -134,7 +134,6 @@ public class Controller
 
     /**
      * loads last saved game
-     *
      * @return
      */
     public Game loadGame()
