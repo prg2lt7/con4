@@ -104,6 +104,8 @@ public class ControllerTest
     {
         System.out.println("resetPlayfield");
         Controller instance = new Controller();
+        instance.setOpponentDifficulty(1);
+
         instance.setStone(5);
         instance.setStone(2);
         

@@ -25,6 +25,24 @@ public class Controller
     }
 
     /**
+     * returns current game
+     * @return 
+     */
+    public Game getGame()
+    {
+        return game;
+    }
+
+    public static void setOpponentDifficulty(int difficulty)
+    {
+        if (opponent.getClass() == LocalOpponent.class)
+        {
+            LocalOpponent op = (LocalOpponent) opponent;
+            op.setDifficulty(difficulty);
+        }
+    }
+
+    /**
      * Player or opponent intends to set a stone at position x,y Method checks
      * for possibilty to set stone at requested position
      * @param xPosition
@@ -67,15 +85,6 @@ public class Controller
                 game.getState().setGameOver(true);
             }
         }
-    }
-
-    /**
-     * returns current game
-     * @return 
-     */
-    public Game getGame()
-    {
-        return game;
     }
 
     public void networkGame(Network net, boolean server)
