@@ -13,7 +13,7 @@ import java.util.Random;
 public class LocalOpponent extends Opponent
 {
     private int difficulty;
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     /**
      * Constructor to create a local opponent. 
@@ -149,8 +149,8 @@ public class LocalOpponent extends Opponent
                     tempfield2.putStone(i, super.getValue());
                     choice2[i] = findBestStone2(tempfield2.getField(), false, 6, 1);
                 }
-                int max2 = choice2[0];
-                x = 0;
+                int max2 = -2147483648;
+                x = -1;
                 for (int i = 0; i < field.getField().length; i++)
                 {
                     if (DEBUG)
@@ -159,7 +159,7 @@ public class LocalOpponent extends Opponent
                     }
                     if (choice2[i] > max2)
                     {
-                        if (field.getField()[x][field.getField()[x].length - 1] == 0)
+                        if (field.getField()[i][field.getField()[i].length - 1] == 0)
                         {
                             max2 = choice2[i];
                             x = i;
@@ -168,7 +168,7 @@ public class LocalOpponent extends Opponent
                 }
                 if (DEBUG)
                 {
-                    System.out.println("");
+                    System.out.println("  " + x);
                 }
                 break;
             
