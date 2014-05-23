@@ -8,6 +8,7 @@ package graphic;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import logic.Controller;
 
 
@@ -29,6 +30,13 @@ public class PlayfieldGraphics extends JFrame
     {
         return graphicField;
     }
+
+    public JPanel getPlayArea()
+    {
+        return playArea;
+    }
+    
+   
     
     //More detailed MouseListener for the GameStone-Events
     GameStoneListener stoneListener;
@@ -85,12 +93,12 @@ public class PlayfieldGraphics extends JFrame
         playArea = new javax.swing.JPanel();
         MenuBar = new javax.swing.JMenuBar();
         FileMenu = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        menuNewGame = new javax.swing.JMenuItem();
+        menuSaveGame = new javax.swing.JMenuItem();
+        menuLoadGame = new javax.swing.JMenuItem();
         NetworkMenu = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        menuHostGame = new javax.swing.JMenuItem();
+        menuJoinGame = new javax.swing.JMenuItem();
 
         jMenu2.setText("File");
         jMenuBar2.add(jMenu2);
@@ -115,38 +123,52 @@ public class PlayfieldGraphics extends JFrame
 
         FileMenu.setText("File");
 
-        jMenuItem1.setText("New Game");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener()
+        menuNewGame.setText("New Game");
+        menuNewGame.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jMenuItem1ActionPerformed(evt);
+                menuNewGameActionPerformed(evt);
             }
         });
-        FileMenu.add(jMenuItem1);
+        FileMenu.add(menuNewGame);
 
-        jMenuItem2.setText("Save Game");
-        FileMenu.add(jMenuItem2);
+        menuSaveGame.setText("Save Game");
+        menuSaveGame.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                menuSaveGameActionPerformed(evt);
+            }
+        });
+        FileMenu.add(menuSaveGame);
 
-        jMenuItem3.setText("Load Game");
-        FileMenu.add(jMenuItem3);
+        menuLoadGame.setText("Load Game");
+        menuLoadGame.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                menuLoadGameActionPerformed(evt);
+            }
+        });
+        FileMenu.add(menuLoadGame);
 
         MenuBar.add(FileMenu);
 
         NetworkMenu.setText("Network");
 
-        jMenuItem4.setText("Host Game");
-        NetworkMenu.add(jMenuItem4);
+        menuHostGame.setText("Host Game");
+        NetworkMenu.add(menuHostGame);
 
-        jMenuItem6.setText("Join Game");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener()
+        menuJoinGame.setText("Join Game");
+        menuJoinGame.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jMenuItem6ActionPerformed(evt);
+                menuJoinGameActionPerformed(evt);
             }
         });
-        NetworkMenu.add(jMenuItem6);
+        NetworkMenu.add(menuJoinGame);
 
         MenuBar.add(NetworkMenu);
 
@@ -171,29 +193,18 @@ public class PlayfieldGraphics extends JFrame
      *
      * @param evt String which is the selected menu point
      */
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        switch (evt.getActionCommand())
-        {
-            case "New Game":
+    private void menuNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNewGameActionPerformed
+        
                 resetPlayfield();
-                break;
-            case "Save Game":
-                gamecontrol.saveGame();
-                break;
-            case "Load Game":
-                loadPlayfield();
-                break;
-
-            default:
-        }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+         
+    }//GEN-LAST:event_menuNewGameActionPerformed
 
     /**
      * Is used to handle the network settings
      * @param evt String which contains what element was clicked
      */
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem6ActionPerformed
-    {//GEN-HEADEREND:event_jMenuItem6ActionPerformed
+    private void menuJoinGameActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuJoinGameActionPerformed
+    {//GEN-HEADEREND:event_menuJoinGameActionPerformed
         switch(evt.getActionCommand()){
             case "Host Game":
                 
@@ -204,7 +215,18 @@ public class PlayfieldGraphics extends JFrame
             default:
                 
         }
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_menuJoinGameActionPerformed
+
+    private void menuSaveGameActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuSaveGameActionPerformed
+    {//GEN-HEADEREND:event_menuSaveGameActionPerformed
+        gamecontrol.saveGame();
+    }//GEN-LAST:event_menuSaveGameActionPerformed
+
+    private void menuLoadGameActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuLoadGameActionPerformed
+    {//GEN-HEADEREND:event_menuLoadGameActionPerformed
+        gamecontrol.loadGame();
+                loadPlayfield();
+    }//GEN-LAST:event_menuLoadGameActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -214,12 +236,12 @@ public class PlayfieldGraphics extends JFrame
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem menuHostGame;
+    private javax.swing.JMenuItem menuJoinGame;
+    private javax.swing.JMenuItem menuLoadGame;
+    private javax.swing.JMenuItem menuNewGame;
+    private javax.swing.JMenuItem menuSaveGame;
     private javax.swing.JPanel playArea;
     // End of variables declaration//GEN-END:variables
 

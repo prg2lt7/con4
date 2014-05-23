@@ -137,7 +137,7 @@ public class Field implements Serializable
                 
                 for (ModelListener ChangeListener : listener)
                 {
-                    ChangeListener.modelChanged();
+                    ChangeListener.modelChanged(field);
                 }
                 return true;
             }
@@ -167,7 +167,7 @@ public class Field implements Serializable
         
         for (ModelListener ChangeListener : listener)
         {
-            ChangeListener.modelChanged();
+            ChangeListener.modelChanged(field);
         }
     }
 

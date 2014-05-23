@@ -10,12 +10,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.MouseListener;
+import javax.swing.JComponent;
 
 /**
  * Represents one playstone on the connect four playfield.
  * @author Marc
  */
-public class GameStone extends Component
+public class GameStone extends JComponent
 {
    
     private final int row;
@@ -37,20 +38,17 @@ public class GameStone extends Component
     }
     
     @Override
-    public void paint(Graphics g)
-    {
-        super.paint(g); 
-        
-         //fills the stones with the set color
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         g.setColor(stoneColor);       
         g.fillOval(5, 5, 25, 25);
         
         // sets the border of the playstones
         g.setColor(Color.BLACK);
         g.drawOval(5,5 , 25, 25);
-        
        
     }
+    
 
    
     
