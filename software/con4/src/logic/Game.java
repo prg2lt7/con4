@@ -8,8 +8,8 @@ import java.io.Serializable;
  */
 public class Game implements Serializable
 {
-    private static Field field;
-    private static State state;
+    private Field field;
+    private State state;
 
     /**
      * Default constructor. Creates game with default sized field (7*6)
