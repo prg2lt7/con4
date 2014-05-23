@@ -13,6 +13,6 @@ package logic;
 public interface ModelListener
 {
 
-   void modelChanged();
+   void modelChanged(int[][] playField);
    
 }

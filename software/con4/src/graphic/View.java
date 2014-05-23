@@ -7,8 +7,6 @@
 package graphic;
 
 import java.awt.Color;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logic.Field;
 import logic.ModelListener;
 
@@ -40,9 +38,9 @@ public class View implements ModelListener
      * is stored in the game controller
      * 
      */
-    public void repaintPlayfield()
+    public synchronized void repaintPlayfield(int[][] playField)
     {
-        int[][] k = field.getField();
+        int[][] k = playField;
         //used to story which color the element should have
         Color tempColor;
         
@@ -73,17 +71,20 @@ public class View implements ModelListener
                 
                 //The component gets the color from the logical playfield
                 graphicalField[i][j].setColor(tempColor);
+               
 
             }
         }
 
-        graphics.repaint();
+       
+        
+       graphics.getPlayArea().repaint();
         
     }
 
     @Override
-    public void modelChanged()
+    public void modelChanged(int[][] playField)
     {
-        repaintPlayfield();
+        repaintPlayfield(playField);
     }
 }
