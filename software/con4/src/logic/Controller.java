@@ -117,6 +117,7 @@ public class Controller
     {
         String fileName = "saveGame.dat";
         File gameFile = new File(fileName);
+        gameFile.delete();
         if (!gameFile.exists())
         {
             try

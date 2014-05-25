@@ -85,6 +85,14 @@ public class Field implements Serializable
         return winner;
     }
 
+    /*
+     * 
+     */
+    public ArrayList<ModelListener> getListener()
+    {
+        return listener;
+    }
+
     /**
      * Sets the field.
      *
@@ -110,6 +118,19 @@ public class Field implements Serializable
     public void setWinner(int winner)
     {
         this.winner = winner;
+    }
+
+    /**
+     * 
+     * @param listener 
+     */
+    public void setListener(ArrayList<ModelListener> listener)
+    {
+        this.listener = listener;
+        for (ModelListener ChangeListener : listener)
+        {
+            ChangeListener.modelChanged(field);
+        }
     }
 
     /**

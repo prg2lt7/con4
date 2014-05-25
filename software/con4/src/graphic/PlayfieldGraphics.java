@@ -7,10 +7,12 @@ package graphic;
 
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import logic.Controller;
 import logic.Game;
+import logic.ModelListener;
 
 
 /**
@@ -227,8 +229,10 @@ public class PlayfieldGraphics extends JFrame
     {//GEN-HEADEREND:event_menuLoadGameActionPerformed
         //Game game = gamecontrol.loadGame();
         //PlayfieldGraphics game = new PlayfieldGraphics(gamecontrol);
+        ArrayList<ModelListener> oldListener = gamecontrol.getGame().getField().getListener();
         gamecontrol.loadGame();
-        View graphic = new View(gamecontrol.getGame().getField(), this);
+        gamecontrol.getGame().getField().setListener(oldListener);
+        //View graphic = new View(gamecontrol.getGame().getField(), this);
         //gamecontrol.loadGame();
                 //loadPlayfield();
     }//GEN-LAST:event_menuLoadGameActionPerformed
