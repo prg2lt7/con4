@@ -227,14 +227,9 @@ public class PlayfieldGraphics extends JFrame
 
     private void menuLoadGameActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuLoadGameActionPerformed
     {//GEN-HEADEREND:event_menuLoadGameActionPerformed
-        //Game game = gamecontrol.loadGame();
-        //PlayfieldGraphics game = new PlayfieldGraphics(gamecontrol);
         ArrayList<ModelListener> oldListener = gamecontrol.getGame().getField().getListener();
         gamecontrol.loadGame();
         gamecontrol.getGame().getField().setListener(oldListener);
-        //View graphic = new View(gamecontrol.getGame().getField(), this);
-        //gamecontrol.loadGame();
-                //loadPlayfield();
     }//GEN-LAST:event_menuLoadGameActionPerformed
 
 

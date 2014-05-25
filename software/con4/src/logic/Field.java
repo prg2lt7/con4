@@ -85,8 +85,9 @@ public class Field implements Serializable
         return winner;
     }
 
-    /*
-     * 
+    /**
+     * Returns an Arraylist of ModelListeners containing all Listeners. 
+     * @return Listeners
      */
     public ArrayList<ModelListener> getListener()
     {
@@ -121,7 +122,8 @@ public class Field implements Serializable
     }
 
     /**
-     * 
+     * Sets the listeners based on existing ArrayList of ModelListeners. 
+     * After setting up the listeners they are activated to redraw the field. 
      * @param listener 
      */
     public void setListener(ArrayList<ModelListener> listener)
