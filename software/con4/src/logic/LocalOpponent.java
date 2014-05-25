@@ -236,7 +236,7 @@ public class LocalOpponent extends Opponent
         }
         if (tempfield.isWinner() != 0 && tempfield.isWinner() != super.getValue())
         {
-            count = -1024;
+            count = -256;
         }
         if (iteration > 0 && tempfield.isWinner() == 0)
         {
