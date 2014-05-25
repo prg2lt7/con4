@@ -1,0 +1,32 @@
+LocalOpponent:
+
+Diese Klasse dient zur Handhabung der künstlichen 
+Intelligenz. Über die Wahl eines
+Schwierigkeitsgrades lässt sich zwischen 
+verschiedenen Implementationen wählen. Als Standard
+wird momentan die intelligenteste Implementation 
+verwendet.
+
+Diese berechnet die Gewinnchancen für jeden Zug. 
+Dazu wird auf jeder möglichen Position ein Stein
+gesetzt und überprüft, ob ein Spieler gewonnen hat. 
+Dies wird rekurviv für jeden Stein bis zu einer Tiefe 
+von 7 Spielzügen durchgeführt. 
+Ein Sieg des LocalOpponent wird dabei mit einem Wert 
+von 16 bewertet. Ein Sieg des Spielers wird mit -256 
+bewertet. 
+Der Wert eines weiter in der Zukunft liegenden Zuges 
+wird dabei durch den Faktor 2 dividiert. 
+So wird ein sofortiger Sieg schwächer gewichtet als 
+eine baldige Niederlage. Damit wird ein weitsichtigeres 
+Spiel bezweckt. 
+
+Ein anderer implementierter Algorithmus beachtet auch 
+andere Anordnungen von Steinen, die zu einem Sieg 
+führen können. 
+
+Zudem existiert ein Algorithmus, welcher die Steine 
+zufällig setzt. 
+
+Wird kein zulässiger Algorithmus ausgewählt, werden 
+die Spalten von links her aufgefüllt. 
