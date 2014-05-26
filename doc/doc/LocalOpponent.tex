@@ -20,11 +20,18 @@ wird dabei durch den Faktor 2 dividiert.
 So wird ein sofortiger Sieg schwächer gewichtet als 
 eine baldige Niederlage. Damit wird ein weitsichtigeres 
 Spiel bezweckt. 
+Von diesem Algorithmus kann auch eine Variante mit 
+Threads ausgewählt werden. Dabei wird für jeden 
+Stein ein eigener Thread gestartet, der dann die 
+Berechung für diesen Stein durchführt. Dadurch 
+können diese Berechnungen auf mehrere Prozessoren 
+aufgeteilt werden. 
 
 Ein anderer implementierter Algorithmus beachtet auch 
 andere Anordnungen von Steinen, die zu einem Sieg 
 führen können. Zum Beispiel werden drei Steine in 
-einer Reihe mit einer Lücke mitbeachtet. 
+einer Reihe mit einer Lücke mitbeachtet. Dieser wird 
+jedoch nicht aktiv weiter entwickelt. 
 
 Zudem existiert ein Algorithmus, welcher die Steine 
 zufällig setzt. 
