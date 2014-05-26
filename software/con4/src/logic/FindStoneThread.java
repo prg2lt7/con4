@@ -15,38 +15,58 @@ public class FindStoneThread implements Runnable
     private static final boolean DEBUG = true;
     private Field field;
 
-    public FindStoneThread()
+    /**
+     * Constructor to create a thread that calculates some moves forward
+     */
+    public FindStoneThread(String name)
     {
-        t = new Thread();
-        t.start();
+        t = new Thread(this, name);
     }
 
+    /**
+     * Return the value for the given field
+     * @return Value for given field
+     */
     public int getChoiceValue()
     {
         return choiceValue;
     }
 
+    /**
+     * Returns the field
+     * @return field
+     */
     public Field getField()
     {
         return field;
     }
 
-    public void setChoiceValue(int choiceValue)
-    {
-        this.choiceValue = choiceValue;
-    }
-
+    /**
+     * Set the field
+     * @param field 
+     */
     public void setField(Field field)
     {
         this.field = field;
     }
 
+    /**
+     * Calculate the value for the given value
+     */
     @Override
     public void run()
     {
         choiceValue = findBestStone(field.getField(), true, 6, 1);
     }
-    
+
+    /**
+     * Recursive Function to iterate recursively through all possible moves.
+     * @param currentfield field before setting the next stone
+     * @param myStone value of the opponent's stones
+     * @param iteration recursion depth
+     * @param playervalue value of the player's stones
+     * @return value representing win / lose rate for this move
+     */
     private int findBestStone(int[][] currentfield, boolean myStone, int iteration, int playervalue)
     {
         //System.out.println("Finding best stone");

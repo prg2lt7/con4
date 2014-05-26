@@ -13,7 +13,7 @@ import java.util.Random;
  */
 public class LocalOpponent extends Opponent
 {
-    
+
     private int difficulty;
     private static final boolean DEBUG = true;
 
@@ -182,19 +182,15 @@ public class LocalOpponent extends Opponent
                 ArrayList<Field> tempfield3 = new ArrayList<>();
                 int[] choice3 = new int[field.getField().length];
                 ArrayList<FindStoneThread> threads = new ArrayList<>();
-                // Initialize fields and threads
+                // Initialize fields and start threads
                 for (int i = 0; i < field.getField().length; i++)
                 {
                     tempfield3.add(i, new Field(field.getField().length, field.getField()[0].length));
                     tempfield3.get(i).setField(field.getField());
                     tempfield3.get(i).putStone(i, super.getValue());
-                    threads.add(i, new FindStoneThread());
+                    threads.add(i, new FindStoneThread("" + i));
                     threads.get(i).setField(tempfield3.get(i));
-                }
-                // Start all threads
-                for (FindStoneThread t : threads)
-                {
-                    t.run();
+                    threads.get(i).t.start();
                 }
                 // Wait for all threads to finish
                 for (FindStoneThread t : threads)
@@ -412,7 +408,7 @@ public class LocalOpponent extends Opponent
             }
             x++;
         }
-        
+
         return count;
     }
 
@@ -496,7 +492,7 @@ public class LocalOpponent extends Opponent
         {
             return -7000;
         }
-        
+
         return 0;
     }
 }
