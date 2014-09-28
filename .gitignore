@@ -25,3 +25,6 @@ hs_err_pid*
 
 /software/con4/dist/
 /software/con4/build/
+
+# saved games
+**/*.dat
