@@ -13,6 +13,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JComponent;
 
 /**
+ * Change for new Git-Tool
  * Represents one playstone on the connect four playfield.
  * @author Marc
  */
